@@ -11,6 +11,8 @@ public class User {
     private Date lastUpdate;
     private String lastUpdatedBy;
 
+    public User() {}
+
     public User(int userId, String userName, String password, String createBy, Date lastUpdate, String lastUpdatedBy) {
         setUserId(userId);
         setUserName(userName);
