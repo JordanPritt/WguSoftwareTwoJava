@@ -20,11 +20,12 @@ public class LoginScreen implements Initializable {
         Locale locale = Locale.getDefault();
         String lang = locale.getDisplayLanguage();
         String country = locale.getDisplayCountry();
-        regionLanguage.setText("Country: " + country + " | Language: " + lang);
+        regionLanguage.setText("Country: " + resourceBundle.getString("country")
+                + " | Language: " + resourceBundle.getString("language"));
     }
 
     public void onLoginAction(ActionEvent actionEvent) {
-        Alert dialogue = new Alert(Alert.AlertType.CONFIRMATION,"Sorry, nothing to login to yet...try again later.");
+        Alert dialogue = new Alert(Alert.AlertType.CONFIRMATION, "Sorry, nothing to login to yet...try again later.");
         dialogue.show();
     }
 }
