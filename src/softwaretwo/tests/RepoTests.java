@@ -1,8 +1,8 @@
-package tests;
+package softwaretwo.tests;
 
-import data.models.User;
-import data.repositories.IUserRepository;
-import data.repositories.UserRepo;
+import softwaretwo.data.models.User;
+import softwaretwo.data.repositories.IUserRepository;
+import softwaretwo.data.repositories.UserRepo;
 
 public class RepoTests {
     public static boolean getSignInUserTest() {

@@ -1,6 +1,6 @@
-package data.repositories;
+package softwaretwo.data.repositories;
 
-import data.models.User;
+import softwaretwo.data.models.User;
 
 public interface IUserRepository {
     User getSignInUser(String userName, String password);

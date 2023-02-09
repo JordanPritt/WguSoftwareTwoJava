@@ -1,4 +1,4 @@
-package data.models;
+package softwaretwo.data.models;
 
 import java.util.Date;
 

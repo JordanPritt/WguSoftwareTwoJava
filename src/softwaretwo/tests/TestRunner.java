@@ -1,4 +1,4 @@
-package tests;
+package softwaretwo.tests;
 
 public class TestRunner {
     public static void RunTests() {

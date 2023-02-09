@@ -1,7 +1,7 @@
-package services;
+package softwaretwo.services;
 
-import data.models.User;
-import data.repositories.UserRepo;
+import softwaretwo.data.models.User;
+import softwaretwo.data.repositories.UserRepo;
 
 public class UserService {
     private final UserRepo userRepo = new UserRepo();

@@ -1,8 +1,7 @@
-package data.repositories;
+package softwaretwo.data.repositories;
 
-import com.mysql.cj.result.Field;
-import data.access.ClientScheduleContext;
-import data.models.User;
+import softwaretwo.data.access.ClientScheduleContext;
+import softwaretwo.data.models.User;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;

@@ -1,5 +1,7 @@
-package userInterface.controller;
+package softwaretwo.userInterface.controller;
 
+import javafx.scene.control.Button;
+import softwaretwo.SchedulerApplication;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -10,17 +12,19 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
-import services.UserService;
+import softwaretwo.services.UserService;
 
 import java.io.IOException;
 import java.net.URL;
-import java.util.Objects;
+import java.util.Locale;
 import java.util.ResourceBundle;
 
 public class LoginScreen implements Initializable {
     private final UserService userService = new UserService();
     private ResourceBundle resourceBundle;
 
+    @FXML
+    Button loginBtn;
     @FXML
     Label regionLanguage;
     @FXML
@@ -40,10 +44,14 @@ public class LoginScreen implements Initializable {
         boolean isSignedIn = userService.validateUserCredentials(usernameTxtBox.getText(), passwordTxtBox.getText());
         if (isSignedIn) {
             // open next screen
-            Parent mainScreen = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/userInterface/view/MainScreen.fxml")));
-            Scene scene = new Scene(mainScreen, 800, 600);
+            ResourceBundle bundle = ResourceBundle.getBundle("softwaretwo/resources/translations", Locale.getDefault());
+            FXMLLoader loader = new FXMLLoader();
+            loader.setResources(bundle);
+            loader.setLocation(getClass().getResource("/softwaretwo/userInterface/view/MainScreen.fxml"));
             Stage appStage = (Stage) regionLanguage.getScene().getWindow();
-            appStage.setScene(scene);
+            Parent root = loader.load();
+            appStage.setTitle("Login");
+            appStage.setScene(new Scene(root,800, 600));
             appStage.show();
         } else if (usernameTxtBox.getText().trim().equals("") || passwordTxtBox.getText().trim().equals("")) {
             String message = resourceBundle.getString("loginEmptyError");

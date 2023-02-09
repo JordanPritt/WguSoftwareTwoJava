@@ -1,26 +1,27 @@
+package softwaretwo;
+
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-import tests.TestRunner;
+import softwaretwo.tests.TestRunner;
 
-import java.util.ListResourceBundle;
 import java.util.Locale;
 import java.util.ResourceBundle;
 
-public class Main extends Application {
+public class SchedulerApplication extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception {
         Locale current = Locale.getDefault();
         // test locations for translation checking
         Locale french = new Locale.Builder().setLanguage("fr").setRegion("FR").build();
         Locale uk = new Locale.Builder().setLanguage("en").setRegion("GB").build();
-        ResourceBundle bundle = ResourceBundle.getBundle("resources/translations", uk);
+        ResourceBundle bundle = ResourceBundle.getBundle("softwaretwo/resources/translations", uk);
 
         FXMLLoader loader = new FXMLLoader();
         loader.setResources(bundle);
-        loader.setLocation(getClass().getResource("/userInterface/view/LoginScreen.fxml"));
+        loader.setLocation(getClass().getResource("/softwaretwo/userInterface/view/LoginScreen.fxml"));
 
         // open first/default window of application
         Parent root = loader.load();
@@ -30,7 +31,7 @@ public class Main extends Application {
     }
 
     public static void main(String[] args) {
-        // run tests
+        // run softwaretwo.tests
         TestRunner.RunTests();
         // launch JavaFX
         launch();
