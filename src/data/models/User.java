@@ -11,16 +11,17 @@ public class User {
     private Date lastUpdate;
     private String lastUpdatedBy;
 
-    public User() {}
+    public User() {
+    }
 
-    public User(int userId, String userName, String password, String createBy, Date lastUpdate, String lastUpdatedBy) {
-        setUserId(userId);
-        setUserName(userName);
-        setPassword(password);
-        setCreateBy(createBy);
-        setCreateDate(createDate);
-        setLastUpdate(lastUpdate);
-        setLastUpdatedBy(lastUpdatedBy);
+    public User(int userId, String userName, String password, Date createDate, String createBy, Date lastUpdate, String lastUpdatedBy) {
+        this.userId = userId;
+        this.userName = userName;
+        this.password = password;
+        this.createBy = createBy;
+        this.createDate = createDate;
+        this.lastUpdate = lastUpdate;
+        this.lastUpdatedBy = lastUpdatedBy;
     }
 
     public int getUserId() {

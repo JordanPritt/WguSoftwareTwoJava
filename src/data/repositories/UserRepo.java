@@ -12,7 +12,7 @@ public class UserRepo implements IUserRepository {
     @Override
     public User getSignInUser(String userName, String password) {
         String sql = """
-                SELECT * FROM client_schedule.users WHERE User_Name=? AND Password=?;
+                SELECT * FROM client_schedule.users WHERE User_Name=? AND Password=? LIMIT 1;
                 """;
         try {
             ClientScheduleContext.OpenConnection();

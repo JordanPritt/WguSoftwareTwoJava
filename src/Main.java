@@ -13,8 +13,10 @@ public class Main extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception {
         Locale current = Locale.getDefault();
+        // test locations for translation checking
         Locale french = new Locale.Builder().setLanguage("fr").setRegion("FR").build();
-        ResourceBundle bundle = ResourceBundle.getBundle("resources/translations", french);
+        Locale uk = new Locale.Builder().setLanguage("en").setRegion("GB").build();
+        ResourceBundle bundle = ResourceBundle.getBundle("resources/translations", uk);
 
         FXMLLoader loader = new FXMLLoader();
         loader.setResources(bundle);
