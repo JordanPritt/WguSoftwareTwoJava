@@ -15,9 +15,9 @@ public class SchedulerApplication extends Application {
     public void start(Stage primaryStage) throws Exception {
         Locale current = Locale.getDefault();
         // test locations for translation checking
-        Locale french = new Locale.Builder().setLanguage("fr").setRegion("FR").build();
-        Locale uk = new Locale.Builder().setLanguage("en").setRegion("GB").build();
-        ResourceBundle bundle = ResourceBundle.getBundle("softwaretwo/resources/translations", uk);
+        //Locale french = new Locale.Builder().setLanguage("fr").setRegion("FR").build();
+       // Locale uk = new Locale.Builder().setLanguage("en").setRegion("GB").build();
+        ResourceBundle bundle = ResourceBundle.getBundle("softwaretwo/resources/translations", current);
 
         FXMLLoader loader = new FXMLLoader();
         loader.setResources(bundle);
