@@ -1,5 +1,8 @@
 package softwaretwo.tests;
 
+import java.time.Duration;
+import java.time.Instant;
+
 /**
  * A class for running tests and displaying their results.
  */
@@ -15,6 +18,9 @@ public class TestRunner {
      */
     public static void RunTests() {
         int testCounter = 0;
+        Instant starts, ends;
+        starts = Instant.now();
+
         try {
             System.out.println(ANSI_PURPLE + "Running tests" + ANSI_RESET + "...\n" + ANSI_RESET);
             printTestResult(RepoTests.getSignInUserTest(), "getSignInUser");
@@ -25,8 +31,11 @@ public class TestRunner {
             String message = ANSI_RED + "\n[Error]\n" + ANSI_RESET + "Testing Failed, reason: ";
             System.out.println(message + ANSI_YELLOW + ex.getMessage() + ANSI_RESET);
         } finally {
-            String completeMessage = "\n[Testing Complete]\n" + ANSI_RESET + "Ran: " + testCounter + " test(s)";
-            System.out.println(ANSI_YELLOW + completeMessage);
+            ends = Instant.now();
+            String completeMessage = "\n[Testing Complete]\n" + ANSI_RESET + "Ran " + testCounter + " test(s)";
+            long duration = Duration.between(starts, ends).getSeconds();
+            String timeText = String.format("%d:%02d:%02d", duration / 3600, (duration % 3600) / 60, (duration % 60));
+            System.out.println(ANSI_YELLOW + completeMessage + " in: " + timeText);
         }
     }
 
