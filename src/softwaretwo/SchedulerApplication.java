@@ -5,18 +5,23 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-import softwaretwo.tests.TestRunner;
 
 import java.util.Locale;
 import java.util.ResourceBundle;
 
+/**
+ * A GUI application for managing scheduling.
+ */
 public class SchedulerApplication extends Application {
+    /**
+     * JavaFX start point.
+     *
+     * @param primaryStage primary stage.
+     * @throws Exception an exception.
+     */
     @Override
     public void start(Stage primaryStage) throws Exception {
         Locale current = Locale.getDefault();
-        // test locations for translation checking
-        //Locale french = new Locale.Builder().setLanguage("fr").setRegion("FR").build();
-       // Locale uk = new Locale.Builder().setLanguage("en").setRegion("GB").build();
         ResourceBundle bundle = ResourceBundle.getBundle("softwaretwo/resources/translations", current);
 
         FXMLLoader loader = new FXMLLoader();
@@ -25,14 +30,17 @@ public class SchedulerApplication extends Application {
 
         // open first/default window of application
         Parent root = loader.load();
-        primaryStage.setTitle("Login");
-        primaryStage.setScene(new Scene(root,800, 600));
+        primaryStage.setTitle(bundle.getString("main"));
+        primaryStage.setScene(new Scene(root, 800, 600));
         primaryStage.show();
     }
 
+    /**
+     * The main entry to the application.
+     *
+     * @param args string arguments list.
+     */
     public static void main(String[] args) {
-        // run softwaretwo.tests
-        TestRunner.RunTests();
         // launch JavaFX
         launch();
     }

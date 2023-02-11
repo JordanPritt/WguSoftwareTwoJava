@@ -2,6 +2,7 @@ module softwaretwo {
     requires javafx.controls;
     requires javafx.fxml;
     requires java.sql;
+    requires mysql.connector.java;
 
     opens softwaretwo to javafx.fxml;
     exports softwaretwo;

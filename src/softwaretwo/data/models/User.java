@@ -2,6 +2,9 @@ package softwaretwo.data.models;
 
 import java.util.Date;
 
+/**
+ * A User model.
+ */
 public class User {
     private int userId;
     private String userName;
@@ -11,9 +14,23 @@ public class User {
     private Date lastUpdate;
     private String lastUpdatedBy;
 
+    /**
+     * Empty constructor.
+     */
     public User() {
     }
 
+    /**
+     * Default constructor.
+     *
+     * @param userId        a user's identifier.
+     * @param userName      a user's username.
+     * @param password      a user's password.
+     * @param createDate    a user's created date.
+     * @param createBy      a user's created by.
+     * @param lastUpdate    a user's last update date.
+     * @param lastUpdatedBy a user's who last updated by.
+     */
     public User(int userId, String userName, String password, Date createDate, String createBy, Date lastUpdate, String lastUpdatedBy) {
         this.userId = userId;
         this.userName = userName;

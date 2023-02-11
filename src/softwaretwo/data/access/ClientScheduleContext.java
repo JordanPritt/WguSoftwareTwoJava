@@ -3,6 +3,9 @@ package softwaretwo.data.access;
 import java.sql.Connection;
 import java.sql.DriverManager;
 
+/**
+ * A DAO context for communicating with the database.
+ */
 public class ClientScheduleContext {
     private static final String protocol = "jdbc";
     private static final String vendor = ":mysql:";
@@ -13,22 +16,29 @@ public class ClientScheduleContext {
     private static final String userName = "sqlUser";
     private static final String password = "Passw0rd!";
 
+    /**
+     * A Connection to use for database connection operations.
+     */
     public static Connection connection;
 
+    /**
+     * Opens a connection to the database.
+     */
     public static void OpenConnection() {
         try {
             Class.forName(driver);
             connection = DriverManager.getConnection(url, userName, password);
-            System.out.println("Successfully connected to database.");
         } catch (Exception ex) {
             System.out.println("Could not connect to database: " + ex.getMessage());
         }
     }
 
+    /**
+     * Closes a connection to the database.
+     */
     public static void CloseConnection() {
         try {
             connection.close();
-            System.out.println("Successfully closed database connection.");
         } catch (Exception ex) {
             System.out.println("Could not close connection: " + ex.getMessage());
         }

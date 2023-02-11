@@ -7,7 +7,13 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+/**
+ * A repository for User database interactions.
+ */
 public class UserRepo implements IUserRepository {
+    /**
+     * @inheritDoc
+     */
     @Override
     public User getSignInUser(String userName, String password) {
         String sql = """
@@ -37,5 +43,37 @@ public class UserRepo implements IUserRepository {
         } finally {
             ClientScheduleContext.CloseConnection();
         }
+    }
+
+    /**
+     * @inheritDoc
+     */
+    @Override
+    public User getUser(int userId) {
+        return null;
+    }
+
+    /**
+     * @inheritDoc
+     */
+    @Override
+    public boolean insertUser(User user) {
+        return false;
+    }
+
+    /**
+     * @inheritDoc
+     */
+    @Override
+    public boolean updateUser(User user) {
+        return false;
+    }
+
+    /**
+     * @inheritDoc
+     */
+    @Override
+    public boolean deleteUser(int userId) {
+        return false;
     }
 }

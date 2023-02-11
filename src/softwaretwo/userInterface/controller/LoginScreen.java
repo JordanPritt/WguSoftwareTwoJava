@@ -1,16 +1,12 @@
 package softwaretwo.userInterface.controller;
 
-import javafx.scene.control.Button;
-import softwaretwo.SchedulerApplication;
+import javafx.scene.control.*;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import softwaretwo.services.UserService;
 
@@ -19,6 +15,9 @@ import java.net.URL;
 import java.util.Locale;
 import java.util.ResourceBundle;
 
+/**
+ * Login screens controller
+ */
 public class LoginScreen implements Initializable {
     private final UserService userService = new UserService();
     private ResourceBundle resourceBundle;
@@ -30,7 +29,7 @@ public class LoginScreen implements Initializable {
     @FXML
     TextField usernameTxtBox;
     @FXML
-    TextField passwordTxtBox;
+    PasswordField passwordTxtBox;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -50,7 +49,7 @@ public class LoginScreen implements Initializable {
             loader.setLocation(getClass().getResource("/softwaretwo/userInterface/view/MainScreen.fxml"));
             Stage appStage = (Stage) regionLanguage.getScene().getWindow();
             Parent root = loader.load();
-            appStage.setTitle("Login");
+            appStage.setTitle(resourceBundle.getString("main"));
             appStage.setScene(new Scene(root,800, 600));
             appStage.show();
         } else if (usernameTxtBox.getText().trim().equals("") || passwordTxtBox.getText().trim().equals("")) {

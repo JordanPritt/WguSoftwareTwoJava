@@ -4,37 +4,43 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/17.0.2-ea"
-            xmlns:fx="http://javafx.com/fxml/1" fx:controller="softwaretwo.userInterface.controller.MainScreen">
+<AnchorPane prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="softwaretwo.userInterface.controller.MainScreen">
     <children>
         <Label layoutX="14.0" layoutY="14.0" text="%header">
             <font>
-                <Font size="24.0"/>
+                <Font size="24.0" />
             </font>
         </Label>
-        <Label fx:id="greetingLabel" layoutX="14.0" layoutY="81.0" text="%greetingText"/>
-        <TableView fx:id="upcomingAppointmentsTable" layoutX="386.0" layoutY="14.0" prefHeight="259.0"
-                   prefWidth="400.0">
-            <columns>
-                <TableColumn prefWidth="75.0" text="C1"/>
-                <TableColumn prefWidth="75.0" text="C2"/>
-            </columns>
-        </TableView>
-        <TabPane layoutX="13.0" layoutY="286.0" prefHeight="300.0" prefWidth="774.0" tabClosingPolicy="UNAVAILABLE">
+        <Label fx:id="greetingLabel" layoutX="14.0" layoutY="81.0" text="%greetingText" />
+        <Label layoutX="318.0" layoutY="20.0" prefHeight="17.0" prefWidth="475.0" style="-fx-alignment:center;" text="%tableLabel" />
+        <TableView fx:id="upcomingAppointmentsTable" layoutX="311.0" layoutY="47.0" prefHeight="145.0" prefWidth="475.0" />
+        <TabPane layoutX="13.0" layoutY="203.0" prefHeight="383.0" prefWidth="774.0" style="-fx-background-color: white;" tabClosingPolicy="UNAVAILABLE">
             <tabs>
                 <Tab fx:id="customersTab" text="%customerTab">
                     <content>
-                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0"/>
+                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                            <children>
+                                <TableView fx:id="customerTable" layoutX="130.0" layoutY="8.0" prefHeight="336.0" prefWidth="630.0" />
+                                <Button fx:id="addCustomerBtn" layoutX="14.0" layoutY="14.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="90.0" text="%addCustomerTxt" />
+                                <Button fx:id="editCustomerBtn" layoutX="14.0" layoutY="61.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="90.0" text="%editCustomerTxt" />
+                                <Button fx:id="deleteCustomerBtn" layoutX="14.0" layoutY="108.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="90.0" text="%deleteCustomerTxt" />
+                            </children>
+                        </AnchorPane>
                     </content>
                 </Tab>
                 <Tab fx:id="schedulingTab" text="%schedulingTab">
                     <content>
-                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0"/>
+                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                            <TableView fx:id="appointmentTable" layoutX="130.0" layoutY="8.0" prefHeight="336.0" prefWidth="630.0" />
+                            <Button fx:id="addAppointmentBtn" layoutX="14.0" layoutY="14.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="90.0" text="%addAppointmentTxt" />
+                            <Button fx:id="editAppointmentBtn" layoutX="14.0" layoutY="61.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="90.0" text="%editAppointmentTxt" />
+                            <Button fx:id="deleteAppointmentBtn" layoutX="14.0" layoutY="108.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="90.0" text="%deleteAppointmentTxt" />
+                        </AnchorPane>
                     </content>
                 </Tab>
                 <Tab fx:id="reportsTab" text="%reportTab">
                     <content>
-                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0"/>
+                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
                     </content>
                 </Tab>
             </tabs>
