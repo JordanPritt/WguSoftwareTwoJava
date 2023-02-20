@@ -3,11 +3,9 @@ package softwaretwo.data.repositories;
 import softwaretwo.data.access.ClientScheduleContext;
 import softwaretwo.data.models.Customer;
 
-import java.sql.Date;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.time.Instant;
+import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -72,15 +70,15 @@ public class CustomerRepository implements ICustomerRepository {
                 """;
         try {
             ClientScheduleContext.OpenConnection();
-            Date createDate = new Date(customer.getCreatedDate().getTime());
+            Timestamp createDate = Timestamp.from(Instant.now());
             PreparedStatement ps = ClientScheduleContext.connection.prepareStatement(sql);
             ps.setString(1, customer.getCustomerName());
             ps.setString(2, customer.getAddress());
             ps.setString(3, customer.getPostalCode());
             ps.setString(4, customer.getPhone());
-            ps.setDate(5, createDate);
+            ps.setTimestamp(5, createDate);
             ps.setString(6, customer.getCreatedBy());
-            ps.setDate(7, createDate);
+            ps.setTimestamp(7, createDate);
             ps.setString(8, customer.getLastUpdatedBy());
             ps.setInt(9, customer.getDivisionId());
             ps.execute();
@@ -97,7 +95,7 @@ public class CustomerRepository implements ICustomerRepository {
      * @inheritDocs
      */
     public boolean updateCustomer(Customer customer) {
-        final java.util.Date updatedDate = Date.from(Instant.now());
+        final Timestamp updatedDate = Timestamp.from(Instant.now());
         final String sql = """
                 UPDATE customers
                 SET Customer_Name=?, Address=?, Postal_Code=?, Phone=?, Create_Date=?, Created_By=?, Last_Update=?,
@@ -111,9 +109,9 @@ public class CustomerRepository implements ICustomerRepository {
             ps.setString(2, customer.getAddress());
             ps.setString(3, customer.getPostalCode());
             ps.setString(4, customer.getPhone());
-            ps.setDate(5, new Date(customer.getCreatedDate().getTime()));
+            ps.setTimestamp(5, Timestamp.valueOf(customer.getCreatedDate().toLocalDateTime()));
             ps.setString(6, customer.getCreatedBy());
-            ps.setDate(7, new Date(updatedDate.getTime()));
+            ps.setTimestamp(7, updatedDate);
             ps.setString(8, customer.getLastUpdatedBy());
             ps.setInt(9, customer.getDivisionId());
             ps.setInt(10, customer.getCustomerId());
@@ -145,17 +143,23 @@ public class CustomerRepository implements ICustomerRepository {
 
             ArrayList<Customer> customers = new ArrayList<>();
             while (results.next()) {
+                // setup all non-date properties
                 Customer customer = new Customer();
                 customer.setCustomerId(results.getInt(1));
                 customer.setCustomerName(results.getString(2));
                 customer.setAddress(results.getString(3));
                 customer.setPostalCode(results.getString(4));
                 customer.setPhone(results.getString(5));
-                customer.setCreatedDate(results.getDate(6));
                 customer.setCreatedBy(results.getString(7));
-                customer.setLastUpdate(results.getDate(8));
                 customer.setLastUpdatedBy(results.getString(9));
                 customer.setDivisionId(results.getInt(10));
+
+                // manage the date times
+                Timestamp createdDateTimestamp = results.getTimestamp(6);
+                customer.setCreatedDate(createdDateTimestamp.toLocalDateTime().atZone(ZoneId.of("UTC")));
+                Timestamp lastUpdateTimestamp = results.getTimestamp(8);
+                customer.setCreatedDate(lastUpdateTimestamp.toLocalDateTime().atZone(ZoneId.of("UTC")));
+
                 customers.add(customer);
             }
             return customers;
@@ -173,6 +177,41 @@ public class CustomerRepository implements ICustomerRepository {
      */
     @Override
     public Customer getCustomer(int id) {
-        return null;
+        final String sql = """
+                SELECT * FROM customers WHERE Customer_ID=? LIMIT 1;
+                """;
+        try {
+            ClientScheduleContext.OpenConnection();
+            PreparedStatement ps = ClientScheduleContext.connection.prepareStatement(sql);
+            ps.setInt(id, 1);
+            ResultSet results = ps.executeQuery();
+
+            Customer customer = new Customer();
+            while (results.next()) {
+                // setup all non-date properties
+                customer.setCustomerId(results.getInt(1));
+                customer.setCustomerName(results.getString(2));
+                customer.setAddress(results.getString(3));
+                customer.setPostalCode(results.getString(4));
+                customer.setPhone(results.getString(5));
+                customer.setCreatedBy(results.getString(7));
+                customer.setLastUpdatedBy(results.getString(9));
+                customer.setDivisionId(results.getInt(10));
+
+                // manage the date times
+                Timestamp createdDateTimestamp = results.getTimestamp(6);
+                customer.setCreatedDate(createdDateTimestamp.toLocalDateTime().atZone(ZoneId.of("UTC")));
+                Timestamp lastUpdateTimestamp = results.getTimestamp(8);
+                customer.setCreatedDate(lastUpdateTimestamp.toLocalDateTime().atZone(ZoneId.of("UTC")));
+            }
+
+            return customer;
+        } catch (SQLException ex) {
+            System.out.println("Could not get customer, reason: " + ex.getMessage());
+            return null;
+        } catch (Exception ex) {
+            System.out.println("Error occurred while getting customer, reason: " + ex.getMessage());
+            return null;
+        }
     }
 }

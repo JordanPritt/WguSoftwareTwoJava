@@ -5,9 +5,11 @@ import softwaretwo.data.models.Customer;
 import softwaretwo.data.models.User;
 import softwaretwo.data.repositories.*;
 
-import java.text.SimpleDateFormat;
 import java.time.Instant;
-import java.util.Date;
+import java.time.ZoneId;
+import java.time.ZoneOffset;
+import java.time.ZonedDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 /**
@@ -25,6 +27,7 @@ public class RepoTests {
             User user = userRepo.getSignInUser("test", "test");
             return user.getUserId() == 1;
         } catch (Exception ex) {
+            printTestError(ex.getMessage());
             return false;
         }
     }
@@ -40,6 +43,7 @@ public class RepoTests {
             List<Appointment> appointments = apptRepo.getAllAppointments();
             return appointments.size() > 0;
         } catch (Exception ex) {
+            printTestError(ex.getMessage());
             return false;
         }
     }
@@ -52,7 +56,7 @@ public class RepoTests {
     public static boolean insertCustomerTest() {
         try {
             // guarantee created date and updated date are the same
-            java.sql.Date date = new java.sql.Date(Date.from(Instant.now()).getTime());
+            ZonedDateTime date = ZonedDateTime.ofInstant(Instant.now(), ZoneOffset.UTC);
             // setup mock data
             ICustomerRepository customerRepo = new CustomerRepository();
             Customer mockCustomer = new Customer();
@@ -68,7 +72,7 @@ public class RepoTests {
             // run insert and return the result
             return customerRepo.insertCustomer(mockCustomer);
         } catch (Exception ex) {
-            //System.out.println("Error: " + ex.getMessage());
+            printTestError(ex.getMessage());
             return false;
         }
     }
@@ -83,6 +87,7 @@ public class RepoTests {
             ICustomerRepository customerRepo = new CustomerRepository();
             return customerRepo.deleteCustomer("Server Generated");
         } catch (Exception ex) {
+            printTestError(ex.getMessage());
             return false;
         }
     }
@@ -95,19 +100,25 @@ public class RepoTests {
     public static boolean updateCustomerTest() {
         try {
             ICustomerRepository customerRepo = new CustomerRepository();
-            SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-            Date createdDate = formatter.parse("2023-02-05 23:48:30");
-            Date lastUpdatedDate = formatter.parse("2023-02-05 23:48:30");
+            final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss").withZone(ZoneId.of("UTC"));
+            ZonedDateTime createdDate = ZonedDateTime.parse("2023-02-05 23:48:30", formatter);
+            ZonedDateTime lastUpdatedDate = ZonedDateTime.parse("2023-02-05 23:48:30", formatter);
 
             Customer mockData = new Customer("Daddy Warbucks", "1919 Boardwalk", "01291",
                     "869-908-1875", createdDate, "script", lastUpdatedDate, "server",
                     29, 1);
             return customerRepo.updateCustomer(mockData);
         } catch (Exception ex) {
+            printTestError(ex.getMessage());
             return false;
         }
     }
 
+    /**
+     * Tests gettings a list of all the customers.
+     *
+     * @return a boolean indicating pass or fail.
+     */
     public static boolean getAllCustomerTest() {
         try {
             ICustomerRepository customerRepo = new CustomerRepository();
@@ -117,8 +128,32 @@ public class RepoTests {
             else
                 throw new Exception("No customers in database, check for missing data.");
         } catch (Exception ex) {
-            System.out.println("Test failed, reason: " + ex.getMessage());
+            printTestError(ex.getMessage());
             return false;
         }
+    }
+
+    /**
+     * Tests getting a customer by their identifier.
+     *
+     * @return a boolean representing pass or fail.
+     */
+    public static boolean getCustomerTest() {
+        try {
+            ICustomerRepository customerRepo = new CustomerRepository();
+            Customer customer = customerRepo.getCustomer(1);
+            if (customer.getCustomerName().equals("Daddy Warbucks"))
+                return true;
+            else
+                throw new Exception("Customer was not found.");
+        } catch (Exception ex) {
+            printTestError(ex.getMessage());
+            return false;
+        }
+    }
+
+    // help method for printing out error messages.
+    private static void printTestError(String errorMessage) {
+        System.out.println("Test failed, reason: " + errorMessage);
     }
 }

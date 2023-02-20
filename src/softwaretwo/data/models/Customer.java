@@ -1,5 +1,6 @@
 package softwaretwo.data.models;
 
+import java.time.ZonedDateTime;
 import java.util.Date;
 
 /**
@@ -10,9 +11,9 @@ public class Customer {
     private String address;
     private String postalCode;
     private String phone;
-    private Date createdDate;
+    private ZonedDateTime createdDate;
     private String createdBy;
-    private Date lastUpdate;
+    private ZonedDateTime lastUpdate;
     private String lastUpdatedBy;
     private int divisionId;
     private int customerId;
@@ -37,7 +38,7 @@ public class Customer {
      * @param divisionId    customer's division identifier.
      * @param customerId    customer's identifier.
      */
-    public Customer(String customerName, String address, String postalCode, String phone, Date createdDate, String createdBy, Date lastUpdate, String lastUpdatedBy, int divisionId, int customerId) {
+    public Customer(String customerName, String address, String postalCode, String phone, ZonedDateTime createdDate, String createdBy, ZonedDateTime lastUpdate, String lastUpdatedBy, int divisionId, int customerId) {
         this.customerName = customerName;
         this.address = address;
         this.postalCode = postalCode;
@@ -82,11 +83,11 @@ public class Customer {
         this.phone = phone;
     }
 
-    public Date getCreatedDate() {
+    public ZonedDateTime getCreatedDate() {
         return createdDate;
     }
 
-    public void setCreatedDate(Date createdDate) {
+    public void setCreatedDate(ZonedDateTime createdDate) {
         this.createdDate = createdDate;
     }
 
@@ -98,11 +99,11 @@ public class Customer {
         this.createdBy = createdBy;
     }
 
-    public Date getLastUpdate() {
+    public ZonedDateTime getLastUpdate() {
         return lastUpdate;
     }
 
-    public void setLastUpdate(Date lastUpdate) {
+    public void setLastUpdate(ZonedDateTime lastUpdate) {
         this.lastUpdate = lastUpdate;
     }
 
