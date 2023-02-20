@@ -8,6 +8,7 @@ public class LoginLogModel {
     private int attemptCount;
     private String timestamp;
     private boolean isSuccessful;
+    private String successMessage;
 
     /**
      * Empty constructor.
@@ -22,12 +23,22 @@ public class LoginLogModel {
      * @param attemptCount attempt try number.
      * @param timestamp    current timestamp.
      * @param isSuccessful success indicator.
+     * @param successMessage reason for success/failure.
      */
-    public LoginLogModel(String username, int attemptCount, String timestamp, boolean isSuccessful) {
+    public LoginLogModel(String username, int attemptCount, String timestamp, boolean isSuccessful, String successMessage) {
         this.username = username;
         this.attemptCount = attemptCount;
         this.timestamp = timestamp;
         this.isSuccessful = isSuccessful;
+        this.successMessage = successMessage;
+    }
+
+    public String getSuccessMessage() {
+        return successMessage;
+    }
+
+    public void setSuccessMessage(String successMessage) {
+        this.successMessage = successMessage;
     }
 
     public String getUsername() {

@@ -15,21 +15,24 @@ public class LoginLogger {
      *
      * @param log the log to track.
      */
-    public void LogUserActivity(LoginLogModel log) {
+    public static void LogUserActivity(LoginLogModel log) {
         try {
             // create file object and file if not exist
             File logFile = new File("login_activity.txt");
             // write log to file
             FileWriter fw = new FileWriter(logFile, true);
             fw.append("Username: ")
-                    .append(log.getUsername())
+                    .append(String.format("%-25s", log.getUsername()))
                     .append(" | ")
                     .append("Attempt: ")
-                    .append(String.valueOf(log.getAttemptCount()))
+                    .append(String.format("%-3s", (log.getAttemptCount())))
                     .append(" | ")
+                    .append("Timestamp: ")
                     .append(log.getTimestamp())
-                    .append(" | was success:")
-                    .append(String.valueOf(log.isSuccessful()))
+                    .append(" | successful:")
+                    .append(String.format("%-5s", log.isSuccessful()))
+                    .append(" | reason: ")
+                    .append(log.getSuccessMessage())
                     .append("\n");
             fw.close();
         } catch (IOException e) {
@@ -43,7 +46,7 @@ public class LoginLogger {
      *
      * @return a timestamp string.
      */
-    public String getTimeStamp() {
+    public static String getTimeStamp() {
         Date date = new Date();
         SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy h:mm:ss a");
         return sdf.format(date);

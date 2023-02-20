@@ -9,25 +9,41 @@ import java.util.List;
  */
 public interface ICustomerRepository {
     /**
-     * Deletes a user from the database based on an id.
+     * Deletes a customer from the database based on an id.
      *
-     * @param customerId a user's identifier.
+     * @param customerId a customer's identifier.
      * @return boolean indicating pass or fail.
      */
     boolean deleteCustomer(int customerId);
 
     /**
-     * Inserts a new user to the database.
+     * Updates a customer in the database.
      *
-     * @param customer the User to be inserted.
+     * @param customer the Customer to be inserted.
+     * @return a boolean indicating pass or fail.
+     */
+    boolean updateCustomer(Customer customer);
+
+    /**
+     * Deletes a customer from the database based on name.
+     *
+     * @param customerName a customer's name.
+     * @return boolean indicating pass or fail.
+     */
+    boolean deleteCustomer(String customerName);
+
+    /**
+     * Inserts a new customer to the database.
+     *
+     * @param customer the Customer to be inserted.
      * @return a boolean indicating pass or fail.
      */
     boolean insertCustomer(Customer customer);
 
     /**
-     * Retrieves all users from the database.
+     * Retrieves all customers from the database.
      *
-     * @return a list of all users.
+     * @return a list of all customers.
      */
     List<Customer> getAllCustomers();
 
@@ -37,5 +53,5 @@ public interface ICustomerRepository {
      * @param id a customer's identifier.
      * @return a customer object.
      */
-    Customer getUser(int id);
+    Customer getCustomer(int id);
 }

@@ -31,6 +31,18 @@ public class TestRunner {
 
             printTestResult(LoginLoggerTests.logUserActivityTest(), "logUserActivityTest");
             testCounter++;
+
+            printTestResult(RepoTests.insertCustomerTest(), "insertCustomerTest");
+            testCounter++;
+
+            printTestResult(RepoTests.deleteCustomerTest(), "deleteCustomerTest");
+            testCounter++;
+
+            printTestResult(RepoTests.updateCustomerTest(), "updateCustomerTest");
+            testCounter++;
+
+            printTestResult(RepoTests.getAllCustomerTest(), "getAllCustomersTest");
+            testCounter++;
         } catch (Exception ex) {
             String message = ANSI_RED + "\n[Error]\n" + ANSI_RESET + "Testing Failed, reason: ";
             System.out.println(message + ANSI_YELLOW + ex.getMessage() + ANSI_RESET);

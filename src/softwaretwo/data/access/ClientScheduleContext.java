@@ -2,6 +2,7 @@ package softwaretwo.data.access;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.SQLException;
 
 /**
  * A DAO context for communicating with the database.
@@ -24,12 +25,16 @@ public class ClientScheduleContext {
     /**
      * Opens a connection to the database.
      */
-    public static void OpenConnection() {
+    public static void OpenConnection() throws SQLException {
         try {
             Class.forName(driver);
             connection = DriverManager.getConnection(url, userName, password);
-        } catch (Exception ex) {
+        } catch (SQLException ex) {
             System.out.println("Could not connect to database: " + ex.getMessage());
+            throw new SQLException(ex);
+        } catch (ClassNotFoundException ex) {
+            System.out.println("Could not find the class for the driver.");
+            throw new SQLException(ex);
         }
     }
 

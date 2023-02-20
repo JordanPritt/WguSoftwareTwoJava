@@ -6,9 +6,9 @@ import softwaretwo.utilities.LoginLogger;
 import java.io.File;
 
 public class LoginLoggerTests {
-    public static boolean logUserActivityTest(){
+    public static boolean logUserActivityTest() {
         LoginLogger logger = new LoginLogger();
-        LoginLogModel mock = new LoginLogModel("server test", 1, logger.getTimeStamp(), false);
+        LoginLogModel mock = new LoginLogModel("server test", 1, logger.getTimeStamp(), false, "Server ran test.");
         logger.LogUserActivity(mock);
         // check that log file exists
         File file = new File("login_activity.txt");

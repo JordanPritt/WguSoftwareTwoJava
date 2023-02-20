@@ -11,6 +11,9 @@ import java.net.URL;
 import java.util.List;
 import java.util.ResourceBundle;
 
+/**
+ * Main screen controller.
+ */
 public class MainScreen implements Initializable {
     private final AppointmentService appointmentService = new AppointmentService();
     private ResourceBundle resourceBundle;
@@ -47,6 +50,12 @@ public class MainScreen implements Initializable {
     @FXML
     TableView appointmentTable;
 
+    /**
+     * Default JavaFX Controller initializer.
+     *
+     * @param url            path to view.
+     * @param resourceBundle provided resource bundle.
+     */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         this.resourceBundle = resourceBundle;

@@ -34,6 +34,11 @@ public class LoginScreen implements Initializable {
     @FXML
     PasswordField passwordTxtBox;
 
+    /**
+     * Default JavaFX Controller initializer.
+     * @param url path to view.
+     * @param resourceBundle provided resource bundle.
+     */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         this.resourceBundle = resourceBundle;
@@ -42,12 +47,18 @@ public class LoginScreen implements Initializable {
                 + " | Language: " + resourceBundle.getString("language"));
     }
 
+    /**
+     * Performs login actions.
+     *
+     * @param actionEvent the event used for login.
+     * @throws IOException any exception that could occur.
+     */
     public void onLoginAction(ActionEvent actionEvent) throws IOException {
         boolean isSignedIn = userService.validateUserCredentials(usernameTxtBox.getText(), passwordTxtBox.getText());
 
         if (isSignedIn) {
             // track login activity
-            trackLoginAttempt(true, attemptCounter);
+            trackLoginAttempt(true, attemptCounter, "Credentials were valid.");
 
             // open next screen
             ResourceBundle bundle = ResourceBundle.getBundle("softwaretwo/resources/translations", Locale.getDefault());
@@ -61,7 +72,7 @@ public class LoginScreen implements Initializable {
             appStage.show();
         } else if (usernameTxtBox.getText().trim().equals("") || passwordTxtBox.getText().trim().equals("")) {
             // track login activity
-            trackLoginAttempt(false, attemptCounter);
+            trackLoginAttempt(false, attemptCounter, "One or both credentials were empty.");
             attemptCounter++;
 
             String message = resourceBundle.getString("loginEmptyError");
@@ -69,7 +80,7 @@ public class LoginScreen implements Initializable {
             dialogue.show();
         } else {
             // track login activity
-            trackLoginAttempt(false, attemptCounter);
+            trackLoginAttempt(false, attemptCounter, "Invalid login credentials.");
             attemptCounter++;
 
             String message = resourceBundle.getString("loginError");
@@ -78,9 +89,8 @@ public class LoginScreen implements Initializable {
         }
     }
 
-    private void trackLoginAttempt(boolean isSuccess, int attempt) {
-        LoginLogger logger = new LoginLogger();
-        LoginLogModel model = new LoginLogModel(usernameTxtBox.getText(), attempt, logger.getTimeStamp(), isSuccess);
-        logger.LogUserActivity(model);
+    private void trackLoginAttempt(boolean isSuccess, int attempt, String message) {
+        LoginLogModel model = new LoginLogModel(usernameTxtBox.getText(), attempt, LoginLogger.getTimeStamp(), isSuccess, message);
+        LoginLogger.LogUserActivity(model);
     }
 }
