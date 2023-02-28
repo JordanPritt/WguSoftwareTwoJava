@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="softwaretwo.userInterface.controller.AddOrEditCustomerScreen">
+    <children>
+        <TextField fx:id="nameTxt" layoutX="14.0" layoutY="116.0" prefHeight="26.0" prefWidth="175.0" />
+        <TextField fx:id="phoneTxt" layoutX="213.0" layoutY="116.0" prefHeight="26.0" prefWidth="175.0" />
+        <Label layoutX="14.0" layoutY="92.0" text="Customer Name" />
+        <Label layoutX="213.0" layoutY="92.0" text="Phone" />
+        <Label layoutX="411.0" layoutY="92.0" text="Division Id" />
+        <TitledPane animated="false" layoutX="14.0" layoutY="153.0" prefHeight="160.0" prefWidth="577.0" text="Address">
+            <content>
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="176.0" prefWidth="575.0">
+                    <children>
+                        <Label layoutX="14.0" layoutY="14.0" text="Country" />
+                        <Label layoutX="208.0" layoutY="14.0" text="State or Province" />
+                        <TextField fx:id="townOrCityTxt" layoutX="225.0" layoutY="96.0" prefHeight="26.0" prefWidth="205.0" />
+                        <Label layoutX="225.0" layoutY="79.0" text="Town or City" />
+                        <TextField fx:id="streetTxt" layoutX="14.0" layoutY="96.0" prefHeight="26.0" prefWidth="205.0" />
+                        <Label layoutX="14.0" layoutY="79.0" text="Street" />
+                        <TextField fx:id="postalCodeTxt" layoutX="436.0" layoutY="96.0" prefHeight="26.0" prefWidth="125.0" />
+                        <Label layoutX="436.0" layoutY="79.0" text="Postal Code" />
+                        <ComboBox fx:id="countryComboBox" layoutX="14.0" layoutY="32.0" prefHeight="26.0" prefWidth="160.0" />
+                        <ComboBox fx:id="stateOrProvinceComboBox" layoutX="208.0" layoutY="33.0" prefHeight="26.0" prefWidth="160.0" />
+                    </children>
+                </AnchorPane>
+            </content>
+        </TitledPane>
+      <HBox layoutX="341.0" layoutY="360.0" spacing="10.0">
+         <children>
+              <Button fx:id="resetBtn" mnemonicParsing="false" onAction="#handleReset" prefWidth="75.0" text="Reset" />
+              <Button fx:id="cancelBtn" mnemonicParsing="false" onAction="#handleCancel" prefWidth="75.0" text="Cancel" />
+              <Button fx:id="saveBtn" mnemonicParsing="false" onAction="#handleSave" prefWidth="75.0" text="Save" />
+         </children>
+      </HBox>
+        <ComboBox fx:id="divisionIdComboBox" layoutX="411.0" layoutY="117.0" prefHeight="26.0" prefWidth="175.0" />
+        <Label fx:id="customerScreenLabel" layoutX="14.0" layoutY="14.0" text="Add Customer">
+            <font>
+                <Font name="System Bold" size="24.0" />
+            </font>
+        </Label>
+      <Separator layoutX="13.0" layoutY="55.0" prefWidth="575.0" />
+    </children>
+</AnchorPane>

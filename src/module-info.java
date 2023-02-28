@@ -4,6 +4,8 @@ module softwaretwo {
     requires java.sql;
     requires mysql.connector.java;
 
+    exports softwaretwo.data.models;
+
     opens softwaretwo to javafx.fxml;
     exports softwaretwo;
 

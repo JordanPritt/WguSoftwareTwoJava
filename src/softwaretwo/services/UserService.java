@@ -14,10 +14,10 @@ public class UserService {
      *
      * @param userName a user's username.
      * @param password a user's password.
-     * @return a boolean indicating pass or fail.
+     * @return a User object if sign-in i successful.
      */
-    public boolean validateUserCredentials(String userName, String password) {
+    public User validateUserCredentials(String userName, String password) {
         User signedInUser = userRepo.getSignInUser(userName, password);
-        return signedInUser.getUserId() != 0; // 0 means the user doesn't exist
+        return signedInUser;
     }
 }

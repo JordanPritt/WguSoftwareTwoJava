@@ -2,13 +2,19 @@ package softwaretwo.userInterface.controller;
 
 import javafx.beans.property.SimpleStringProperty;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.stage.Stage;
 import softwaretwo.data.models.Appointment;
 import softwaretwo.data.models.Customer;
+import softwaretwo.data.models.User;
 import softwaretwo.services.AppointmentService;
 import softwaretwo.services.CustomerService;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -23,11 +29,10 @@ public class MainScreen implements Initializable {
 
     private ResourceBundle resourceBundle;
     private List<Appointment> appointments = appointmentService.getAllAppointments();
-    ;
+    private User user;
 
     @FXML
     Label greetingLabel;
-
     @FXML
     Tab customersTab;
     @FXML
@@ -159,68 +164,111 @@ public class MainScreen implements Initializable {
 
     private void populateCustomerTable() {
         TableColumn<Customer, String> idColumn =
-                new TableColumn<>(resourceBundle.getString("appointmentTableHeaderTitle"));
+                new TableColumn<>(resourceBundle.getString("customerTableIdColumn"));
         idColumn.setCellValueFactory(
                 p -> new SimpleStringProperty(Integer.toString(p.getValue().getCustomerId()))
         );
 
-        TableColumn<Customer, String> nameColumn =
-                new TableColumn<>(resourceBundle.getString("appointmentTableHeaderTitle"));
-        nameColumn.setCellValueFactory(
+        TableColumn<Customer, String> customerNameColumn =
+                new TableColumn<>(resourceBundle.getString("customerTableNameColumn"));
+        customerNameColumn.setCellValueFactory(
                 p -> new SimpleStringProperty(p.getValue().getCustomerName())
         );
 
         TableColumn<Customer, String> addressColumn =
-                new TableColumn<>(resourceBundle.getString("appointmentTableHeaderTitle"));
-        nameColumn.setCellValueFactory(
+                new TableColumn<>(resourceBundle.getString("customerTableAddressColumn"));
+        addressColumn.setCellValueFactory(
                 p -> new SimpleStringProperty(p.getValue().getAddress())
         );
 
         TableColumn<Customer, String> postalCodeColumn =
-                new TableColumn<>(resourceBundle.getString("appointmentTableHeaderTitle"));
-        nameColumn.setCellValueFactory(
+                new TableColumn<>(resourceBundle.getString("customerTablePostalCodeColumn"));
+        postalCodeColumn.setCellValueFactory(
                 p -> new SimpleStringProperty(p.getValue().getPostalCode())
         );
 
         TableColumn<Customer, String> phoneColumn =
-                new TableColumn<>(resourceBundle.getString("appointmentTableHeaderTitle"));
-        nameColumn.setCellValueFactory(
+                new TableColumn<>(resourceBundle.getString("customerTablePhoneColumn"));
+        phoneColumn.setCellValueFactory(
                 p -> new SimpleStringProperty(p.getValue().getPhone())
         );
 
         TableColumn<Customer, String> createDateColumn =
-                new TableColumn<>(resourceBundle.getString("appointmentTableHeaderTitle"));
-        nameColumn.setCellValueFactory(
+                new TableColumn<>(resourceBundle.getString("customerTableCreatedDateColumn"));
+        createDateColumn.setCellValueFactory(
                 p -> new SimpleStringProperty(p.getValue().getCreatedDate().toString())
         );
 
         TableColumn<Customer, String> createByColumn =
-                new TableColumn<>(resourceBundle.getString("appointmentTableHeaderTitle"));
-        nameColumn.setCellValueFactory(
+                new TableColumn<>(resourceBundle.getString("customerTableCreatedByColumn"));
+        createByColumn.setCellValueFactory(
                 p -> new SimpleStringProperty(p.getValue().getCreatedBy())
         );
 
         TableColumn<Customer, String> lastUpdateColumn =
-                new TableColumn<>(resourceBundle.getString("appointmentTableHeaderTitle"));
-        nameColumn.setCellValueFactory(
-                p -> new SimpleStringProperty(p.getValue().getLastUpdate().toString())
+                new TableColumn<>(resourceBundle.getString("customerTableLastUpdateColumn"));
+        lastUpdateColumn.setCellValueFactory(
+                p -> {
+                    String date = p.getValue().getLastUpdate() != null ?
+                            p.getValue().getLastUpdate().toString() : "N/A";
+                    return new SimpleStringProperty(date);
+                }
         );
 
         TableColumn<Customer, String> lastUpdatedByColumn =
-                new TableColumn<>(resourceBundle.getString("appointmentTableHeaderTitle"));
-        nameColumn.setCellValueFactory(
+                new TableColumn<>(resourceBundle.getString("customerTableLastUpdatedByColumn"));
+        lastUpdatedByColumn.setCellValueFactory(
                 p -> new SimpleStringProperty(p.getValue().getLastUpdatedBy())
         );
 
         TableColumn<Customer, String> divisionIdColumn =
-                new TableColumn<>(resourceBundle.getString("appointmentTableHeaderTitle"));
-        nameColumn.setCellValueFactory(
+                new TableColumn<>(resourceBundle.getString("customerTableDivisionIdColumn"));
+        divisionIdColumn.setCellValueFactory(
                 p -> new SimpleStringProperty(Integer.toString(p.getValue().getDivisionId()))
         );
 
         // setup customer table
         List<Customer> customers = customerService.getCustomers();
-        customerTable.getColumns().addAll(idColumn, nameColumn, addressColumn, postalCodeColumn, phoneColumn, createDateColumn, createByColumn, lastUpdateColumn, lastUpdatedByColumn, divisionIdColumn);
+        customerTable.getColumns().addAll(idColumn, customerNameColumn, addressColumn, postalCodeColumn, phoneColumn, createDateColumn, createByColumn, lastUpdateColumn, lastUpdatedByColumn, divisionIdColumn);
         customerTable.getItems().addAll(customers);
+    }
+
+    /**
+     * Handler for Add button.
+     */
+    public void handleAddCustomer() {
+        try {
+            Stage stage = new Stage();
+            FXMLLoader loader = new FXMLLoader();
+            loader.setResources(resourceBundle);
+            loader.setLocation(getClass().getResource("/softwaretwo/userInterface/view/AddOrEditCustomerScreen.fxml"));
+            Parent scene = loader.load();
+            AddOrEditCustomerScreen controller = loader.getController();
+            controller.setUser(user);
+            stage.setTitle("Add Customer");
+            stage.setScene(new Scene(scene));
+            stage.setResizable(false);
+            stage.setOnCloseRequest(event -> {
+                // we want to reload the table in case a customer was added.
+                rePopulateTableData();
+            });
+            stage.show();
+        } catch (IOException ex) {
+            System.out.println("Couldn't load customer add scene because: " + ex.getMessage());
+        }
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+        if (user != null) {
+            final String welcomeMessage = resourceBundle
+                    .getString("greetingText")
+                    .replace("user", user.getUserName());
+            greetingLabel.setText(welcomeMessage);
+        }
     }
 }

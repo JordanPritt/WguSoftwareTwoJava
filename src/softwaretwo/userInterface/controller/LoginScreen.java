@@ -8,6 +8,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import softwaretwo.data.models.User;
 import softwaretwo.services.UserService;
 import softwaretwo.utilities.LoginLogModel;
 import softwaretwo.utilities.LoginLogger;
@@ -54,9 +55,9 @@ public class LoginScreen implements Initializable {
      * @throws IOException any exception that could occur.
      */
     public void onLoginAction(ActionEvent actionEvent) throws IOException {
-        boolean isSignedIn = userService.validateUserCredentials(usernameTxtBox.getText(), passwordTxtBox.getText());
+        User signedInUser = userService.validateUserCredentials(usernameTxtBox.getText(), passwordTxtBox.getText());
 
-        if (isSignedIn) {
+        if (signedInUser != null) {
             // track login activity
             trackLoginAttempt(true, attemptCounter, "Credentials were valid.");
 
@@ -67,8 +68,11 @@ public class LoginScreen implements Initializable {
             loader.setLocation(getClass().getResource("/softwaretwo/userInterface/view/MainScreen.fxml"));
             Stage appStage = (Stage) regionLanguage.getScene().getWindow();
             Parent root = loader.load();
+            MainScreen controller = loader.getController();
+            controller.setUser(signedInUser);
             appStage.setTitle(resourceBundle.getString("main"));
             appStage.setScene(new Scene(root, 800, 600));
+            appStage.setResizable(false);
             appStage.show();
         } else if (usernameTxtBox.getText().trim().equals("") || passwordTxtBox.getText().trim().equals("")) {
             // track login activity
