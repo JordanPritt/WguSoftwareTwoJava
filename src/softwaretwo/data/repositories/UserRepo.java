@@ -27,6 +27,7 @@ public class UserRepo implements IUserRepository {
             ps.setString(1, userName);
             ps.setString(2, password);
             ResultSet results = ps.executeQuery();
+
             while (results.next()) {
                 user.setUserId(results.getInt(1));
                 user.setUserName(results.getString(2));
@@ -36,10 +37,14 @@ public class UserRepo implements IUserRepository {
                 user.setLastUpdate(results.getDate(6));
                 user.setLastUpdatedBy(results.getString(7));
             }
+
+            if (user.getUserName() == null)
+                throw new SQLException("Could not sign-in user: " + userName);
+
             return user;
         } catch (SQLException ex) {
             System.out.println("SQL Error: " + ex.getMessage());
-            return new User(); // if sql fails return an empty object;
+            return null;
         } finally {
             ClientScheduleContext.CloseConnection();
         }

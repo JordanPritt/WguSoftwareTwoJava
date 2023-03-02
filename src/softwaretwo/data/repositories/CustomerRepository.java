@@ -13,8 +13,6 @@ import java.util.List;
  * A repository for Customer database interactions.
  */
 public class CustomerRepository implements ICustomerRepository {
-    private String sql;
-
     /**
      * @inheritDocs
      */

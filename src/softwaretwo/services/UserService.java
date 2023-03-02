@@ -17,7 +17,6 @@ public class UserService {
      * @return a User object if sign-in i successful.
      */
     public User validateUserCredentials(String userName, String password) {
-        User signedInUser = userRepo.getSignInUser(userName, password);
-        return signedInUser;
+        return userRepo.getSignInUser(userName, password);
     }
 }
