@@ -5,6 +5,15 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import softwaretwo.data.models.Appointment;
+import softwaretwo.data.models.Customer;
+import softwaretwo.data.repositories.*;
+import softwaretwo.services.AppointmentService;
+import softwaretwo.services.CustomerService;
+import softwaretwo.services.ICrudService;
+import softwaretwo.services.UserService;
+import softwaretwo.userInterface.controller.LoginScreen;
+import softwaretwo.userInterface.controller.MainScreen;
 
 import java.util.Locale;
 import java.util.ResourceBundle;

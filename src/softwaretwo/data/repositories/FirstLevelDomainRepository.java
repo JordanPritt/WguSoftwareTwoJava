@@ -8,6 +8,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.ExecutionException;
 
 /**
  * Repository class for First Level Domains.
@@ -38,6 +39,34 @@ public class FirstLevelDomainRepository implements IFirstLevelDomainRepository {
         } catch (SQLException ex) {
             System.out.println("SQL Error: " + ex.getMessage());
             return new ArrayList<>();
+        } finally {
+            ClientScheduleContext.CloseConnection();
+        }
+    }
+
+    public int getDivisionByName(String divisionName) throws Exception {
+        final String sql = """
+                SELECT Division_ID
+                FROM client_schedule.first_level_divisions
+                WHERE Division = ?
+                """;
+        try {
+            ClientScheduleContext.OpenConnection();
+            PreparedStatement ps = ClientScheduleContext.connection.prepareStatement(sql);
+            ps.setString(1, divisionName);
+            ResultSet results = ps.executeQuery();
+            int divisionId = -1;
+            while (results.next()) {
+                divisionId = results.getInt("Division_ID");
+            }
+
+            if (divisionId != -1)
+                return divisionId;
+
+            throw new Exception("Could not find division id for: " + divisionName);
+        } catch (SQLException ex) {
+            System.out.println("SQL Error: " + ex.getMessage());
+            throw new Exception(ex.getMessage());
         } finally {
             ClientScheduleContext.CloseConnection();
         }

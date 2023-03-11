@@ -14,4 +14,12 @@ public interface IFirstLevelDomainRepository {
      * @return list of domains.
      */
     List<FirstLevelDomain> getDomains();
+
+    /**
+     * Retrieves the id of a division.
+     *
+     * @param divisionName the division's name.
+     * @return a division's id as an int.
+     */
+    int getDivisionByName(String divisionName) throws Exception;
 }

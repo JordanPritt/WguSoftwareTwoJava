@@ -152,6 +152,20 @@ public class RepoTests {
         }
     }
 
+    public static boolean getDivisionByNameTest() {
+        try {
+            IFirstLevelDomainRepository firstLevelDomainRepo = new FirstLevelDomainRepository();
+            int domainId = firstLevelDomainRepo.getDivisionByName("Alabama");
+            if (domainId != 1)
+                throw new Exception("Wrong domain Id was returned.");
+            else
+                return true;
+        } catch (Exception ex) {
+            printTestError(ex.getMessage());
+            return false;
+        }
+    }
+
     // help method for printing out error messages.
     private static void printTestError(String errorMessage) {
         System.out.println("Test failed, reason: " + errorMessage);

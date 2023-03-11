@@ -23,13 +23,14 @@ import java.util.ResourceBundle;
  * Main screen controller.
  */
 public class MainScreen implements Initializable {
-    // instantiate services
-    private final AppointmentService appointmentService = new AppointmentService();
     private final CustomerService customerService = new CustomerService();
+    private final AppointmentService appointmentService = new AppointmentService();
+    private List<Appointment> appointments;
 
     private ResourceBundle resourceBundle;
-    private List<Appointment> appointments = appointmentService.getAllAppointments();
     private User user;
+
+    //region FXML variables
 
     @FXML
     Label greetingLabel;
@@ -60,6 +61,8 @@ public class MainScreen implements Initializable {
     @FXML
     TableView appointmentTable;
 
+    //endregion
+
     /**
      * Default JavaFX Controller initializer.
      *
@@ -68,6 +71,12 @@ public class MainScreen implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        try {
+            this.appointments = appointmentService.getAll();
+        } catch (Exception ex) {
+            System.out.println("Could not load appointments: " + ex.getMessage());
+        }
+
         this.resourceBundle = resourceBundle;
         // setup upcoming appointment table
         greetingLabel.setText(resourceBundle.getString("greetingText"));
@@ -77,9 +86,28 @@ public class MainScreen implements Initializable {
         populateUpcomingAppointmentTable();
     }
 
-    private void rePopulateTableData() {
-        appointments = appointmentService.getAllAppointments();
+    //region table refresh methods
+    private void refreshCustomerTableData() {
+        customerTable.getItems().clear();
+        customerTable.getColumns().clear();
+        populateCustomerTable();
     }
+
+    private void refreshAppointmentTableData() {
+        appointmentTable.getItems().clear();
+        appointmentTable.getColumns().clear();
+        populateCustomerTable();
+    }
+
+    private void refreshUpcomingAppointmentTableData() {
+        upcomingAppointmentsTable.getItems().clear();
+        upcomingAppointmentsTable.getColumns().clear();
+        populateCustomerTable();
+    }
+
+    //endregion
+
+    //region Populate Tables
 
     private void populateUpcomingAppointmentTable() {
         TableColumn<Appointment, String> titleColumn =
@@ -208,11 +236,7 @@ public class MainScreen implements Initializable {
         TableColumn<Customer, String> lastUpdateColumn =
                 new TableColumn<>(resourceBundle.getString("customerTableLastUpdateColumn"));
         lastUpdateColumn.setCellValueFactory(
-                p -> {
-                    String date = p.getValue().getLastUpdate() != null ?
-                            p.getValue().getLastUpdate().toString() : "N/A";
-                    return new SimpleStringProperty(date);
-                }
+                p -> new SimpleStringProperty(p.getValue().getLastUpdate().toString())
         );
 
         TableColumn<Customer, String> lastUpdatedByColumn =
@@ -228,13 +252,67 @@ public class MainScreen implements Initializable {
         );
 
         // setup customer table
-        List<Customer> customers = customerService.getCustomers();
-        customerTable.getColumns().addAll(idColumn, customerNameColumn, addressColumn, postalCodeColumn, phoneColumn, createDateColumn, createByColumn, lastUpdateColumn, lastUpdatedByColumn, divisionIdColumn);
+        List<Customer> customers = customerService.getAll();
+        customerTable
+                .getColumns()
+                .addAll(
+                        idColumn,
+                        customerNameColumn,
+                        addressColumn,
+                        postalCodeColumn,
+                        phoneColumn,
+                        createDateColumn,
+                        createByColumn,
+                        lastUpdateColumn,
+                        lastUpdatedByColumn,
+                        divisionIdColumn);
         customerTable.getItems().addAll(customers);
     }
 
+    //endregion
+
+    //region Appointment button handlers
+
     /**
-     * Handler for Add button.
+     * Handler for Add Appointment button.
+     */
+    public void handleAddAppointment() {
+        try {
+            Stage stage = new Stage();
+            FXMLLoader loader = new FXMLLoader();
+            loader.setResources(resourceBundle);
+            loader.setLocation(getClass().getResource("/softwaretwo/userInterface/view/AddOrEditAppointmentScreen.fxml"));
+            loader.setControllerFactory(controller -> new AddOrEditAppointmentScreen(user));
+            Parent scene = loader.load();
+            AddOrEditAppointmentScreen controller = loader.getController();
+            stage.setTitle(resourceBundle.getString("appointmentAddLabel"));
+            stage.setScene(new Scene(scene));
+            stage.setResizable(false);
+            stage.setOnHiding(event -> refreshCustomerTableData());
+            stage.show();
+        } catch (IOException ex) {
+            System.out.println(resourceBundle.getString("appointmentAddError") + " reason: " + ex.getMessage());
+        }
+    }
+
+    /**
+     * Handler for Update Appointment button.
+     */
+    public void handleEditAppointment() {
+    }
+
+    /**
+     * Handler for Delete Appointment button.
+     */
+    public void handleDeleteAppointment() {
+    }
+
+    //endregion
+
+    //region Customer button handlers
+
+    /**
+     * Handler for Add Customer button.
      */
     public void handleAddCustomer() {
         try {
@@ -242,21 +320,92 @@ public class MainScreen implements Initializable {
             FXMLLoader loader = new FXMLLoader();
             loader.setResources(resourceBundle);
             loader.setLocation(getClass().getResource("/softwaretwo/userInterface/view/AddOrEditCustomerScreen.fxml"));
+            loader.setControllerFactory(controller -> new AddOrEditCustomerScreen(user));
             Parent scene = loader.load();
             AddOrEditCustomerScreen controller = loader.getController();
             controller.setUser(user);
             stage.setTitle("Add Customer");
             stage.setScene(new Scene(scene));
             stage.setResizable(false);
-            stage.setOnCloseRequest(event -> {
-                // we want to reload the table in case a customer was added.
-                rePopulateTableData();
-            });
+            stage.setOnHiding(event -> refreshCustomerTableData());
             stage.show();
         } catch (IOException ex) {
             System.out.println("Couldn't load customer add scene because: " + ex.getMessage());
         }
     }
+
+    /**
+     * Handles the customer update button.
+     */
+    public void handleUpdateCustomer() {
+        String message = "";
+        try {
+            Customer customer = (Customer) customerTable.getSelectionModel().getSelectedItem();
+            if (customer == null) {
+                message = resourceBundle.getString("selectCustomerMessage");
+                return;
+            }
+            Stage stage = new Stage();
+            FXMLLoader loader = new FXMLLoader();
+            loader.setResources(resourceBundle);
+            loader.setLocation(getClass().getResource("/softwaretwo/userInterface/view/AddOrEditCustomerScreen.fxml"));
+            loader.setControllerFactory(controlerClass -> new AddOrEditCustomerScreen(user, customer, true));
+            Parent scene = loader.load();
+            stage.setTitle("Edit Customer");
+            stage.setScene(new Scene(scene));
+            stage.setResizable(false);
+            stage.setOnHiding(event -> refreshCustomerTableData());
+            stage.show();
+        } catch (Exception ex) {
+            message = resourceBundle.getString("updateCustomerFailText") + " Reason: " + ex.getMessage();
+            System.out.println(message);
+        } finally {
+            if (message.equals(resourceBundle.getString("selectCustomerMessage"))) {
+                Alert alert = new Alert(Alert.AlertType.WARNING);
+                alert.setContentText(message);
+                alert.show();
+            }
+        }
+    }
+
+    /**
+     * Handles the customer delete button.
+     */
+    public void handleDeleteCustomer() {
+        String message = "";
+        try {
+            Customer customer = (Customer) customerTable.getSelectionModel().getSelectedItem();
+            if (customer == null) {
+                message = resourceBundle.getString("selectCustomerMessage");
+                return;
+            }
+
+            // confirm delete
+            Alert alert = new Alert(Alert.AlertType.CONFIRMATION,
+                    "Delete: " + customer.getCustomerName() + " ?",
+                    ButtonType.YES,
+                    ButtonType.CANCEL);
+            alert.setContentText(resourceBundle.getString("deleteCustomerText"));
+            alert.showAndWait();
+
+            if (alert.getResult() == ButtonType.YES) {
+                customerService.delete(customer);
+                message = resourceBundle.getString("deleteCustomerSuccessText");
+                refreshCustomerTableData();
+            }
+        } catch (Exception ex) {
+            message = resourceBundle.getString("deleteCustomerFailText") + " Reason: " + ex.getMessage();
+            System.out.println(message);
+        } finally {
+            if (message.equals(resourceBundle.getString("selectCustomerMessage"))) {
+                Alert alert = new Alert(Alert.AlertType.WARNING);
+                alert.setContentText(message);
+                alert.show();
+            }
+        }
+    }
+
+    //endregion
 
     public User getUser() {
         return user;

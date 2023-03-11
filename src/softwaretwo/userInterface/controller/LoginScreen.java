@@ -8,7 +8,12 @@ import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import softwaretwo.data.models.Appointment;
+import softwaretwo.data.models.Customer;
 import softwaretwo.data.models.User;
+import softwaretwo.data.repositories.UserRepo;
+import softwaretwo.services.AppointmentService;
+import softwaretwo.services.ICrudService;
 import softwaretwo.services.UserService;
 import softwaretwo.utilities.LoginLogModel;
 import softwaretwo.utilities.LoginLogger;
@@ -36,8 +41,15 @@ public class LoginScreen implements Initializable {
     PasswordField passwordTxtBox;
 
     /**
+     * Default empty constructor.
+     */
+    public LoginScreen() {
+    }
+
+    /**
      * Default JavaFX Controller initializer.
-     * @param url path to view.
+     *
+     * @param url            path to view.
      * @param resourceBundle provided resource bundle.
      */
     @Override

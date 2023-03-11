@@ -22,8 +22,8 @@
                             <children>
                                 <TableView fx:id="customerTable" layoutX="130.0" layoutY="8.0" prefHeight="336.0" prefWidth="630.0" />
                                 <Button fx:id="addCustomerBtn" layoutX="14.0" layoutY="14.0" mnemonicParsing="false" onAction="#handleAddCustomer" prefHeight="26.0" prefWidth="90.0" text="%addCustomerTxt" />
-                                <Button fx:id="editCustomerBtn" layoutX="14.0" layoutY="61.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="90.0" text="%editCustomerTxt" />
-                                <Button fx:id="deleteCustomerBtn" layoutX="14.0" layoutY="108.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="90.0" text="%deleteCustomerTxt" />
+                                <Button fx:id="editCustomerBtn" layoutX="14.0" layoutY="61.0" mnemonicParsing="false" onAction="#handleUpdateCustomer" prefHeight="26.0" prefWidth="90.0" text="%editCustomerTxt" />
+                                <Button fx:id="deleteCustomerBtn" layoutX="14.0" layoutY="108.0" mnemonicParsing="false" onAction="#handleDeleteCustomer" prefHeight="26.0" prefWidth="90.0" text="%deleteCustomerTxt" />
                             </children>
                         </AnchorPane>
                     </content>
@@ -32,9 +32,9 @@
                     <content>
                         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                             <TableView fx:id="appointmentTable" layoutX="130.0" layoutY="8.0" prefHeight="336.0" prefWidth="630.0" />
-                            <Button fx:id="addAppointmentBtn" layoutX="14.0" layoutY="14.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="90.0" text="%addAppointmentTxt" />
-                            <Button fx:id="editAppointmentBtn" layoutX="14.0" layoutY="61.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="90.0" text="%editAppointmentTxt" />
-                            <Button fx:id="deleteAppointmentBtn" layoutX="14.0" layoutY="108.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="90.0" text="%deleteAppointmentTxt" />
+                            <Button fx:id="addAppointmentBtn" layoutX="14.0" layoutY="14.0" mnemonicParsing="false" onAction="#handleAddAppointment" prefHeight="26.0" prefWidth="90.0" text="%addAppointmentTxt" />
+                            <Button fx:id="editAppointmentBtn" layoutX="14.0" layoutY="61.0" mnemonicParsing="false" onAction="#handleEditAppointment" prefHeight="26.0" prefWidth="90.0" text="%editAppointmentTxt" />
+                            <Button fx:id="deleteAppointmentBtn" layoutX="14.0" layoutY="108.0" mnemonicParsing="false" onAction="#handleDeleteAppointment" prefHeight="26.0" prefWidth="90.0" text="%deleteAppointmentTxt" />
                         </AnchorPane>
                     </content>
                 </Tab>

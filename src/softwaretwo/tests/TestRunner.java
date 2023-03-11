@@ -44,7 +44,10 @@ public class TestRunner {
             printTestResult(RepoTests.getAllCustomerTest(), "getAllCustomersTest");
             testCounter++;
 
-            printTestResult(RepoTests.getCustomerTest(), "getCustomerTest");
+            printTestResult(RepoTests.getAllCustomerTest(), "getAllCustomersTest");
+            testCounter++;
+
+            printTestResult(RepoTests.getDivisionByNameTest(), "getDivisionByNameTest");
             testCounter++;
         } catch (Exception ex) {
             String message = ANSI_RED + "\n[Error]\n" + ANSI_RESET + "Testing Failed, reason: ";

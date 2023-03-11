@@ -96,7 +96,7 @@ public class CustomerRepository implements ICustomerRepository {
         final Timestamp updatedDate = Timestamp.from(Instant.now());
         final String sql = """
                 UPDATE customers
-                SET Customer_Name=?, Address=?, Postal_Code=?, Phone=?, Create_Date=?, Created_By=?, Last_Update=?,
+                SET Customer_Name=?, Address=?, Postal_Code=?, Phone=?, Last_Update=?,
                     Last_Updated_By=?, Division_ID=?
                 WHERE Customer_ID = ?;
                 """;
@@ -107,12 +107,10 @@ public class CustomerRepository implements ICustomerRepository {
             ps.setString(2, customer.getAddress());
             ps.setString(3, customer.getPostalCode());
             ps.setString(4, customer.getPhone());
-            ps.setTimestamp(5, Timestamp.valueOf(customer.getCreatedDate().toLocalDateTime()));
-            ps.setString(6, customer.getCreatedBy());
-            ps.setTimestamp(7, updatedDate);
-            ps.setString(8, customer.getLastUpdatedBy());
-            ps.setInt(9, customer.getDivisionId());
-            ps.setInt(10, customer.getCustomerId());
+            ps.setTimestamp(5, updatedDate);
+            ps.setString(6, customer.getLastUpdatedBy());
+            ps.setInt(7, customer.getDivisionId());
+            ps.setInt(8, customer.getCustomerId());
             ps.execute();
             return true;
         } catch (SQLException ex) {
@@ -143,20 +141,20 @@ public class CustomerRepository implements ICustomerRepository {
             while (results.next()) {
                 // setup all non-date properties
                 Customer customer = new Customer();
-                customer.setCustomerId(results.getInt(1));
-                customer.setCustomerName(results.getString(2));
-                customer.setAddress(results.getString(3));
-                customer.setPostalCode(results.getString(4));
-                customer.setPhone(results.getString(5));
-                customer.setCreatedBy(results.getString(7));
-                customer.setLastUpdatedBy(results.getString(9));
-                customer.setDivisionId(results.getInt(10));
+                customer.setCustomerId(results.getInt("Customer_ID"));
+                customer.setCustomerName(results.getString("Customer_Name"));
+                customer.setAddress(results.getString("Address"));
+                customer.setPostalCode(results.getString("Postal_Code"));
+                customer.setPhone(results.getString("Phone"));
+                customer.setCreatedBy(results.getString("Created_By"));
+                customer.setLastUpdatedBy(results.getString("Last_Updated_By"));
+                customer.setDivisionId(results.getInt("Division_ID"));
 
                 // manage the date times
-                Timestamp createdDateTimestamp = results.getTimestamp(6);
+                Timestamp createdDateTimestamp = results.getTimestamp("Create_Date");
                 customer.setCreatedDate(createdDateTimestamp.toLocalDateTime().atZone(ZoneId.of("UTC")));
-                Timestamp lastUpdateTimestamp = results.getTimestamp(8);
-                customer.setCreatedDate(lastUpdateTimestamp.toLocalDateTime().atZone(ZoneId.of("UTC")));
+                Timestamp lastUpdateTimestamp = results.getTimestamp("Last_Update");
+                customer.setLastUpdate(lastUpdateTimestamp.toLocalDateTime().atZone(ZoneId.of("UTC")));
 
                 customers.add(customer);
             }

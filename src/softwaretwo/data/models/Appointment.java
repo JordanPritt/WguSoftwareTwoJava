@@ -7,6 +7,9 @@ import java.util.Date;
  */
 public class Appointment {
     private int id;
+    private int customerId;
+    private int userId;
+    private int contactId;
     private String title;
     private String description;
     private String location;
@@ -51,91 +54,199 @@ public class Appointment {
         this.lastUpdatedBy = lastUpdatedBy;
     }
 
+    /**
+     * @return
+     */
     public int getId() {
         return id;
     }
 
+    /**
+     * @param id
+     */
     public void setId(int id) {
         this.id = id;
     }
 
+    /**
+     * @return
+     */
     public String getTitle() {
         return title;
     }
 
+    /**
+     * @param title
+     */
     public void setTitle(String title) {
         this.title = title;
     }
 
+    /**
+     * @return
+     */
     public String getDescription() {
         return description;
     }
 
+    /**
+     * @param description
+     */
     public void setDescription(String description) {
         this.description = description;
     }
 
+    /**
+     * @return
+     */
     public String getLocation() {
         return location;
     }
 
+    /**
+     * @param location
+     */
     public void setLocation(String location) {
         this.location = location;
     }
 
+    /**
+     * @return
+     */
     public String getType() {
         return type;
     }
 
+    /**
+     * @param type
+     */
     public void setType(String type) {
         this.type = type;
     }
 
+    /**
+     * @return
+     */
     public Date getStart() {
         return start;
     }
 
+    /**
+     * @param start
+     */
     public void setStart(Date start) {
         this.start = start;
     }
 
+    /**
+     * @return
+     */
     public Date getEnd() {
         return end;
     }
 
+    /**
+     * @param end
+     */
     public void setEnd(Date end) {
         this.end = end;
     }
 
+    /**
+     * @return
+     */
     public Date getCreateDate() {
         return createDate;
     }
 
+    /**
+     * @param createDate
+     */
     public void setCreateDate(Date createDate) {
         this.createDate = createDate;
     }
 
+    /**
+     * @return
+     */
     public String getCreatedBy() {
         return createdBy;
     }
 
+    /**
+     * @param createdBy
+     */
     public void setCreatedBy(String createdBy) {
         this.createdBy = createdBy;
     }
 
+    /**
+     * @return
+     */
     public Date getLastUpdate() {
         return lastUpdate;
     }
 
+    /**
+     * @param lastUpdate
+     */
     public void setLastUpdate(Date lastUpdate) {
         this.lastUpdate = lastUpdate;
     }
 
+    /**
+     * @return
+     */
     public String getLastUpdatedBy() {
         return lastUpdatedBy;
     }
 
+    /**
+     * @param lastUpdatedBy
+     */
     public void setLastUpdatedBy(String lastUpdatedBy) {
         this.lastUpdatedBy = lastUpdatedBy;
+    }
+
+    /**
+     * @return
+     */
+    public int getCustomerId() {
+        return customerId;
+    }
+
+    /**
+     * @param customerId
+     */
+    public void setCustomerId(int customerId) {
+        this.customerId = customerId;
+    }
+
+    /**
+     * @return
+     */
+    public int getUserId() {
+        return userId;
+    }
+
+    /**
+     * @param userId
+     */
+    public void setUserId(int userId) {
+        this.userId = userId;
+    }
+
+    /**
+     * @return
+     */
+    public int getContactId() {
+        return contactId;
+    }
+
+    /**
+     * @param contactId
+     */
+    public void setContactId(int contactId) {
+        this.contactId = contactId;
     }
 }
