@@ -10,11 +10,10 @@ import java.sql.SQLException;
 /**
  * A repository for User database interactions.
  */
-public class UserRepo implements IUserRepository {
+public class UserRepository {
     /**
      * @inheritDoc
      */
-    @Override
     public User getSignInUser(String userName, String password) {
         String sql = """
                 SELECT * FROM client_schedule.users WHERE User_Name=? AND Password=? LIMIT 1;
@@ -53,7 +52,6 @@ public class UserRepo implements IUserRepository {
     /**
      * @inheritDoc
      */
-    @Override
     public User getUser(int userId) {
         return null;
     }
@@ -61,7 +59,6 @@ public class UserRepo implements IUserRepository {
     /**
      * @inheritDoc
      */
-    @Override
     public boolean insertUser(User user) {
         return false;
     }
@@ -69,7 +66,6 @@ public class UserRepo implements IUserRepository {
     /**
      * @inheritDoc
      */
-    @Override
     public boolean updateUser(User user) {
         return false;
     }
@@ -77,7 +73,6 @@ public class UserRepo implements IUserRepository {
     /**
      * @inheritDoc
      */
-    @Override
     public boolean deleteUser(int userId) {
         return false;
     }

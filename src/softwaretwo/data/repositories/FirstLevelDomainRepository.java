@@ -8,17 +8,15 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.ExecutionException;
 
 /**
  * Repository class for First Level Domains.
  */
-public class FirstLevelDomainRepository implements IFirstLevelDomainRepository {
+public class FirstLevelDomainRepository {
     /**
      * @inheritDocs
      */
-    @Override
-    public List<FirstLevelDomain> getDomains() {
+    public List<FirstLevelDomain> getAll() {
         final String sql = """
                 SELECT Division_ID, Division, COUNTRY_ID
                 FROM client_schedule.first_level_divisions
@@ -44,7 +42,7 @@ public class FirstLevelDomainRepository implements IFirstLevelDomainRepository {
         }
     }
 
-    public int getDivisionByName(String divisionName) throws Exception {
+    public int getByName(String divisionName) throws Exception {
         final String sql = """
                 SELECT Division_ID
                 FROM client_schedule.first_level_divisions

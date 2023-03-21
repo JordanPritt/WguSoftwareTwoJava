@@ -11,11 +11,10 @@ import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CountriesRepository implements ICountriesRepository {
+public class CountriesRepository {
     /**
      * @inheritDocs
      */
-    @Override
     public List<Country> getAllCountries() {
         final String sql = """
                 SELECT * FROM client_schedule.countries;

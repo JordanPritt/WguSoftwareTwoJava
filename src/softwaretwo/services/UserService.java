@@ -1,13 +1,13 @@
 package softwaretwo.services;
 
 import softwaretwo.data.models.User;
-import softwaretwo.data.repositories.UserRepo;
+import softwaretwo.data.repositories.UserRepository;
 
 /**
  * A service for managing users.
  */
 public class UserService {
-    private final UserRepo userRepo = new UserRepo();
+    private final UserRepository userRepository = new UserRepository();
 
     private User currentUser;
 
@@ -19,7 +19,7 @@ public class UserService {
      * @return a User object if sign-in is successful.
      */
     public User validateUserCredentials(String userName, String password) {
-        return userRepo.getSignInUser(userName, password);
+        return userRepository.getSignInUser(userName, password);
     }
 
     /**

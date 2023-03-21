@@ -24,8 +24,8 @@ import java.util.ResourceBundle;
 
 public class AddOrEditCustomerScreen implements Initializable {
     private final CustomerService customerService = new CustomerService();
-    private final IFirstLevelDomainRepository domainRepo = new FirstLevelDomainRepository();
-    private final ICountriesRepository countryRepo = new CountriesRepository();
+    private final FirstLevelDomainRepository domainRepo = new FirstLevelDomainRepository();
+    private final CountriesRepository countryRepo = new CountriesRepository();
 
     private boolean isEdit = false;
     private ResourceBundle resourceBundle;
@@ -90,7 +90,7 @@ public class AddOrEditCustomerScreen implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        this.domains = domainRepo.getDomains();
+        this.domains = domainRepo.getAll();
         this.resourceBundle = resourceBundle;
         this.countries = countryRepo
                 .getAllCountries()
@@ -183,7 +183,7 @@ public class AddOrEditCustomerScreen implements Initializable {
                 throw new InvalidObjectException(resourceBundle.getString("validPhoneNumberMessage"));
 
             // get division id
-            int divisionId = domainRepo.getDivisionByName(stateOrProvinceComboBox.getValue());
+            int divisionId = domainRepo.getByName(stateOrProvinceComboBox.getValue());
 
             Customer newCustomer = new Customer();
             newCustomer.setCustomerName(nameTxt.getText());

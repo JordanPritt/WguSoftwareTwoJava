@@ -2,7 +2,6 @@ package softwaretwo.services;
 
 import softwaretwo.data.models.Appointment;
 import softwaretwo.data.repositories.AppointmentRepository;
-import softwaretwo.data.repositories.IAppointmentRepository;
 
 import java.util.List;
 
@@ -10,7 +9,7 @@ import java.util.List;
  * A service for managing appointments.
  */
 public class AppointmentService implements ICrudService<Appointment> {
-    private final IAppointmentRepository appointmentRepo = new AppointmentRepository();
+    private final AppointmentRepository appointmentRepo = new AppointmentRepository();
 
     /**
      * Retrieves an appointment by id.
@@ -21,7 +20,7 @@ public class AppointmentService implements ICrudService<Appointment> {
     @Override
     public Appointment get(int id) throws Exception {
         try {
-            return appointmentRepo.getAppointment(id);
+            return appointmentRepo.get(id);
         } catch (Exception ex) {
             throw new Exception("Could not get appointment: " + ex.getMessage());
         }
@@ -36,7 +35,7 @@ public class AppointmentService implements ICrudService<Appointment> {
     @Override
     public List<Appointment> getAll() throws Exception {
         try {
-            return appointmentRepo.getAllAppointments();
+            return appointmentRepo.getAll();
         } catch (Exception ex) {
             throw new Exception("Could not get appointments: " + ex.getMessage());
         }
@@ -47,9 +46,10 @@ public class AppointmentService implements ICrudService<Appointment> {
      * @throws Exception with message of what failed.
      */
     @Override
-    public void create(Appointment appointment) throws Exception {
+    public boolean create(Appointment appointment) throws Exception {
         try {
-            appointmentRepo.insertAppointment(appointment);
+            appointmentRepo.insert(appointment);
+            return true;
         } catch (Exception ex) {
             throw new Exception("Could not create appointment: " + ex.getMessage());
         }
@@ -60,9 +60,10 @@ public class AppointmentService implements ICrudService<Appointment> {
      * @throws Exception with message of what failed.
      */
     @Override
-    public void update(Appointment appointment) throws Exception {
+    public boolean update(Appointment appointment) throws Exception {
         try {
-            appointmentRepo.updateAppointment(appointment);
+            appointmentRepo.update(appointment);
+            return true;
         } catch (Exception ex) {
             throw new Exception("Could not update appointment: " + ex.getMessage());
         }
@@ -73,9 +74,10 @@ public class AppointmentService implements ICrudService<Appointment> {
      * @throws Exception with message of what failed.
      */
     @Override
-    public void delete(Appointment appointment) throws Exception {
+    public boolean delete(Appointment appointment) throws Exception {
         try {
-            appointmentRepo.deleteAppointment(appointment.getId());
+            appointmentRepo.delete(appointment.getId());
+            return true;
         } catch (Exception ex) {
             throw new Exception("Could not delete appointment: " + ex.getMessage());
         }

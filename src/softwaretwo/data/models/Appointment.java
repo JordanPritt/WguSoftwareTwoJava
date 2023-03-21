@@ -1,6 +1,6 @@
 package softwaretwo.data.models;
 
-import java.util.Date;
+import java.time.ZonedDateTime;
 
 /**
  * An Appointment model.
@@ -14,11 +14,11 @@ public class Appointment {
     private String description;
     private String location;
     private String type;
-    private Date start;
-    private Date end;
-    private Date createDate;
+    private ZonedDateTime start;
+    private ZonedDateTime end;
+    private ZonedDateTime createDate;
     private String createdBy;
-    private Date lastUpdate;
+    private ZonedDateTime lastUpdate;
     private String lastUpdatedBy;
 
     /**
@@ -40,7 +40,17 @@ public class Appointment {
      * @param lastUpdate    an appointment's last update date.
      * @param lastUpdatedBy an appointment's last updated by.
      */
-    public Appointment(int id, String title, String description, String location, String type, Date start, Date end, Date createDate, String createdBy, Date lastUpdate, String lastUpdatedBy) {
+    public Appointment(int id,
+                       String title,
+                       String description,
+                       String location,
+                       String type,
+                       ZonedDateTime start,
+                       ZonedDateTime end,
+                       ZonedDateTime createDate,
+                       String createdBy,
+                       ZonedDateTime lastUpdate,
+                       String lastUpdatedBy) {
         this.id = id;
         this.title = title;
         this.description = description;
@@ -127,42 +137,42 @@ public class Appointment {
     /**
      * @return
      */
-    public Date getStart() {
+    public ZonedDateTime getStart() {
         return start;
     }
 
     /**
      * @param start
      */
-    public void setStart(Date start) {
+    public void setStart(ZonedDateTime start) {
         this.start = start;
     }
 
     /**
      * @return
      */
-    public Date getEnd() {
+    public ZonedDateTime getEnd() {
         return end;
     }
 
     /**
      * @param end
      */
-    public void setEnd(Date end) {
+    public void setEnd(ZonedDateTime end) {
         this.end = end;
     }
 
     /**
      * @return
      */
-    public Date getCreateDate() {
+    public ZonedDateTime getCreateDate() {
         return createDate;
     }
 
     /**
      * @param createDate
      */
-    public void setCreateDate(Date createDate) {
+    public void setCreateDate(ZonedDateTime createDate) {
         this.createDate = createDate;
     }
 
@@ -183,14 +193,14 @@ public class Appointment {
     /**
      * @return
      */
-    public Date getLastUpdate() {
+    public ZonedDateTime getLastUpdate() {
         return lastUpdate;
     }
 
     /**
      * @param lastUpdate
      */
-    public void setLastUpdate(Date lastUpdate) {
+    public void setLastUpdate(ZonedDateTime lastUpdate) {
         this.lastUpdate = lastUpdate;
     }
 

@@ -12,12 +12,11 @@ import java.util.List;
 /**
  * A repository for Customer database interactions.
  */
-public class CustomerRepository implements ICustomerRepository {
+public class CustomerRepository {
     /**
      * @inheritDocs
      */
-    @Override
-    public boolean deleteCustomer(int customerId) {
+    public boolean delete(int customerId) {
         final String sql = """
                 DELETE FROM client_schedule.customers WHERE Customer_ID = ?;
                 """;
@@ -38,8 +37,7 @@ public class CustomerRepository implements ICustomerRepository {
     /**
      * @inheritDocs
      */
-    @Override
-    public boolean deleteCustomer(String customerName) {
+    public boolean delete(String customerName) {
         final String sql = """
                 DELETE FROM client_schedule.customers WHERE Customer_Name = ?;
                 """;
@@ -60,8 +58,7 @@ public class CustomerRepository implements ICustomerRepository {
     /**
      * @inheritDocs
      */
-    @Override
-    public boolean insertCustomer(Customer customer) {
+    public boolean insert(Customer customer) {
         final String sql = """
                 INSERT INTO client_schedule.customers (Customer_Name,Address,Postal_Code,Phone,Create_Date,Created_By,Last_Update,Last_Updated_By, Division_ID)
                 VALUES (?,?,?,?,?,?,?,?,?);
@@ -92,7 +89,7 @@ public class CustomerRepository implements ICustomerRepository {
     /**
      * @inheritDocs
      */
-    public boolean updateCustomer(Customer customer) {
+    public boolean update(Customer customer) {
         final Timestamp updatedDate = Timestamp.from(Instant.now());
         final String sql = """
                 UPDATE customers
@@ -127,8 +124,7 @@ public class CustomerRepository implements ICustomerRepository {
     /**
      * @inheritDocs
      */
-    @Override
-    public List<Customer> getAllCustomers() {
+    public List<Customer> getAll() {
         final String sql = """
                 SELECT * FROM customers;
                 """;
@@ -150,7 +146,7 @@ public class CustomerRepository implements ICustomerRepository {
                 customer.setLastUpdatedBy(results.getString("Last_Updated_By"));
                 customer.setDivisionId(results.getInt("Division_ID"));
 
-                // manage the date times
+                // manage the date times -- TODO specify timezone of logged in user vs UTC.
                 Timestamp createdDateTimestamp = results.getTimestamp("Create_Date");
                 customer.setCreatedDate(createdDateTimestamp.toLocalDateTime().atZone(ZoneId.of("UTC")));
                 Timestamp lastUpdateTimestamp = results.getTimestamp("Last_Update");
@@ -171,8 +167,7 @@ public class CustomerRepository implements ICustomerRepository {
     /**
      * @inheritDocs
      */
-    @Override
-    public Customer getCustomer(int id) {
+    public Customer get(int id) {
         final String sql = """
                 SELECT * FROM customers WHERE Customer_ID=? LIMIT 1;
                 """;

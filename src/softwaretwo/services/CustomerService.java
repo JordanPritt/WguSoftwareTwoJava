@@ -2,7 +2,6 @@ package softwaretwo.services;
 
 import softwaretwo.data.models.Customer;
 import softwaretwo.data.repositories.CustomerRepository;
-import softwaretwo.data.repositories.ICustomerRepository;
 
 import java.util.List;
 
@@ -10,7 +9,7 @@ import java.util.List;
  * Service class for managing customers.
  */
 public class CustomerService implements ICrudService<Customer> {
-    private final ICustomerRepository customerRepo = new CustomerRepository();
+    private final CustomerRepository customerRepo = new CustomerRepository();
 
     /**
      * Gets a customer by id.
@@ -21,7 +20,7 @@ public class CustomerService implements ICrudService<Customer> {
     @Override
     public Customer get(int id) throws Exception {
         try {
-            return customerRepo.getCustomer(id);
+            return customerRepo.get(id);
         } catch (Exception ex) {
             String message = "Could not get customer with id:" + Integer.toString(id) + " reason: " + ex.getMessage();
             throw new Exception(message);
@@ -35,7 +34,12 @@ public class CustomerService implements ICrudService<Customer> {
      */
     @Override
     public List<Customer> getAll() {
-        return customerRepo.getAllCustomers();
+        try {
+            return customerRepo.getAll();
+        } catch (Exception ex) {
+            System.out.println("Could not get all customers: " + ex.getMessage());
+            return null;
+        }
     }
 
     /**
@@ -45,9 +49,10 @@ public class CustomerService implements ICrudService<Customer> {
      * @throws Exception the exception caught.
      */
     @Override
-    public void create(Customer customer) throws Exception {
+    public boolean create(Customer customer) throws Exception {
         try {
-            customerRepo.insertCustomer(customer);
+            customerRepo.insert(customer);
+            return true;
         } catch (Exception ex) {
             String message = "Could not save customer:" + customer.getCustomerName() + " because:" + ex.getMessage();
             System.out.println("Could not save customer: " + ex.getMessage());
@@ -56,9 +61,10 @@ public class CustomerService implements ICrudService<Customer> {
     }
 
     @Override
-    public void update(Customer customer) throws Exception {
+    public boolean update(Customer customer) throws Exception {
         try {
-            customerRepo.updateCustomer(customer);
+            customerRepo.update(customer);
+            return true;
         } catch (Exception ex) {
             String message = "Could not update customer: " + ex.getMessage();
             System.out.println(message);
@@ -67,9 +73,10 @@ public class CustomerService implements ICrudService<Customer> {
     }
 
     @Override
-    public void delete(Customer customer) throws Exception {
+    public boolean delete(Customer customer) throws Exception {
         try {
-            customerRepo.deleteCustomer(customer.getCustomerId());
+            customerRepo.delete(customer.getCustomerId());
+            return true;
         } catch (Exception ex) {
             String message = "Could not delete customer: " + ex.getMessage();
             System.out.println(message);

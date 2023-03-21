@@ -6,18 +6,19 @@ import softwaretwo.data.models.Appointment;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Timestamp;
+import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.List;
 
 /**
  * A repository for Appointment database interactions.
  */
-public class AppointmentRepository implements IAppointmentRepository {
+public class AppointmentRepository {
     /**
      * @inheritDoc
      */
-    @Override
-    public List<Appointment> getAllAppointments() {
+    public List<Appointment> getAll() {
         try {
             ClientScheduleContext.OpenConnection();
             List<Appointment> appointments = new ArrayList<>();
@@ -36,12 +37,22 @@ public class AppointmentRepository implements IAppointmentRepository {
                 newAppointment.setDescription(results.getString(3));
                 newAppointment.setLocation(results.getString(4));
                 newAppointment.setType(results.getString(5));
-                newAppointment.setStart(results.getDate(6));
-                newAppointment.setEnd(results.getDate(7));
-                newAppointment.setCreateDate(results.getDate(8));
                 newAppointment.setCreatedBy(results.getString(9));
-                newAppointment.setLastUpdate(results.getDate(10));
                 newAppointment.setLastUpdatedBy(results.getString(11));
+
+                // manage the date times -- TODO specify timezone of logged in user vs UTC.
+                Timestamp startTime = results.getTimestamp(6);
+                newAppointment.setStart(startTime.toLocalDateTime().atZone(ZoneId.of("UTC")));
+
+                Timestamp endTime = results.getTimestamp(7);
+                newAppointment.setEnd(endTime.toLocalDateTime().atZone(ZoneId.of(("UTC"))));
+
+                Timestamp createdDate = results.getTimestamp(8);
+                newAppointment.setCreateDate(createdDate.toLocalDateTime().atZone(ZoneId.of(("UTC"))));
+
+                Timestamp lastUpdated = results.getTimestamp(10);
+                newAppointment.setLastUpdate(lastUpdated.toLocalDateTime().atZone(ZoneId.of(("UTC"))));
+
                 appointments.add(newAppointment);
             }
 
@@ -58,32 +69,28 @@ public class AppointmentRepository implements IAppointmentRepository {
     /**
      * @inheritDoc
      */
-    @Override
-    public Appointment getAppointment(int appointmentId) {
+    public Appointment get(int appointmentId) {
         return null;
     }
 
     /**
      * @inheritDoc
      */
-    @Override
-    public boolean insertAppointment(Appointment appointment) {
-        return false;
+    public void insert(Appointment appointment) {
+
     }
 
     /**
      * @inheritDoc
      */
-    @Override
-    public boolean updateAppointment(Appointment appointment) {
-        return false;
+    public void update(Appointment appointment) {
+
     }
 
     /**
      * @inheritDoc
      */
-    @Override
-    public boolean deleteAppointment(int appointmentId) {
-        return false;
+    public void delete(int appointmentId) {
+
     }
 }

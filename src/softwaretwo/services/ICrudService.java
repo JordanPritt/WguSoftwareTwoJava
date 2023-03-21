@@ -29,7 +29,7 @@ public interface ICrudService<T> {
      * @param t the T to create.
      * @throws Exception the exception caught.
      */
-    public void create(T t) throws Exception;
+    public boolean create(T t) throws Exception;
 
     /**
      * Updates a T.
@@ -37,7 +37,7 @@ public interface ICrudService<T> {
      * @param t the T to update.
      * @throws Exception the exception caught.
      */
-    public void update(T t) throws Exception;
+    public boolean update(T t) throws Exception;
 
     /**
      * Deletes T.
@@ -45,5 +45,5 @@ public interface ICrudService<T> {
      * @param t the T to delete.
      * @throws Exception the exception caught.
      */
-    public void delete(T t) throws Exception;
+    public boolean delete(T t) throws Exception;
 }

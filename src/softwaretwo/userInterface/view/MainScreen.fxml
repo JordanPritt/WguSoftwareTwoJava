@@ -35,12 +35,38 @@
                             <Button fx:id="addAppointmentBtn" layoutX="14.0" layoutY="14.0" mnemonicParsing="false" onAction="#handleAddAppointment" prefHeight="26.0" prefWidth="90.0" text="%addAppointmentTxt" />
                             <Button fx:id="editAppointmentBtn" layoutX="14.0" layoutY="61.0" mnemonicParsing="false" onAction="#handleEditAppointment" prefHeight="26.0" prefWidth="90.0" text="%editAppointmentTxt" />
                             <Button fx:id="deleteAppointmentBtn" layoutX="14.0" layoutY="108.0" mnemonicParsing="false" onAction="#handleDeleteAppointment" prefHeight="26.0" prefWidth="90.0" text="%deleteAppointmentTxt" />
+                     <RadioButton layoutX="13.0" layoutY="158.0" mnemonicParsing="false" selected="true" text="Week View">
+                        <toggleGroup>
+                           <ToggleGroup fx:id="weekOrMonth" />
+                        </toggleGroup>
+                     </RadioButton>
+                     <RadioButton layoutX="13.0" layoutY="185.0" mnemonicParsing="false" text="Month View" toggleGroup="$weekOrMonth" />
                         </AnchorPane>
                     </content>
                 </Tab>
                 <Tab fx:id="reportsTab" text="%reportTab">
                     <content>
-                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <TableView layoutX="12.0" layoutY="73.0" prefHeight="265.0" prefWidth="750.0">
+                          <columns>
+                            <TableColumn prefWidth="75.0" text="C1" />
+                            <TableColumn prefWidth="75.0" text="C2" />
+                          </columns>
+                        </TableView>
+                        <HBox layoutX="14.0" layoutY="28.0" spacing="25.0">
+                           <children>
+                              <RadioButton mnemonicParsing="false" selected="true" text="Cusomter Appointment Report">
+                                 <toggleGroup>
+                                    <ToggleGroup fx:id="reportToggle" />
+                                 </toggleGroup>
+                              </RadioButton>
+                              <RadioButton mnemonicParsing="false" text="Contact Schedule Report" toggleGroup="$reportToggle" />
+                              <RadioButton mnemonicParsing="false" text="Most Used Report" toggleGroup="$reportToggle" />
+                           </children>
+                        </HBox>
+                        <Button layoutX="659.0" layoutY="24.0" mnemonicParsing="false" text="Load or Refresh" />
+                     </children></AnchorPane>
                     </content>
                 </Tab>
             </tabs>

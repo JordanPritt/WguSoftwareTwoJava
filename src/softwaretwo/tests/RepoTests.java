@@ -23,8 +23,8 @@ public class RepoTests {
      */
     public static boolean getSignInUserTest() {
         try {
-            IUserRepository userRepo = new UserRepo();
-            User user = userRepo.getSignInUser("test", "test");
+            UserRepository userRepository = new UserRepository();
+            User user = userRepository.getSignInUser("test", "test");
             return user.getUserId() == 1;
         } catch (Exception ex) {
             printTestError(ex.getMessage());
@@ -39,8 +39,8 @@ public class RepoTests {
      */
     public static boolean getAllAppointmentsTest() {
         try {
-            IAppointmentRepository apptRepo = new AppointmentRepository();
-            List<Appointment> appointments = apptRepo.getAllAppointments();
+            AppointmentRepository apptRepo = new AppointmentRepository();
+            List<Appointment> appointments = apptRepo.getAll();
             return appointments.size() > 0;
         } catch (Exception ex) {
             printTestError(ex.getMessage());
@@ -58,7 +58,7 @@ public class RepoTests {
             // guarantee created date and updated date are the same
             ZonedDateTime date = ZonedDateTime.ofInstant(Instant.now(), ZoneOffset.UTC);
             // setup mock data
-            ICustomerRepository customerRepo = new CustomerRepository();
+            CustomerRepository customerRepo = new CustomerRepository();
             Customer mockCustomer = new Customer();
             mockCustomer.setCustomerName("Server Generated");
             mockCustomer.setAddress("123 Test Road, Citiesburgh");
@@ -70,7 +70,7 @@ public class RepoTests {
             mockCustomer.setLastUpdatedBy("Server");
             mockCustomer.setDivisionId(37);
             // run insert and return the result
-            return customerRepo.insertCustomer(mockCustomer);
+            return customerRepo.insert(mockCustomer);
         } catch (Exception ex) {
             printTestError(ex.getMessage());
             return false;
@@ -84,8 +84,8 @@ public class RepoTests {
      */
     public static boolean deleteCustomerTest() {
         try {
-            ICustomerRepository customerRepo = new CustomerRepository();
-            return customerRepo.deleteCustomer("Server Generated");
+            CustomerRepository customerRepo = new CustomerRepository();
+            return customerRepo.delete("Server Generated");
         } catch (Exception ex) {
             printTestError(ex.getMessage());
             return false;
@@ -99,7 +99,7 @@ public class RepoTests {
      */
     public static boolean updateCustomerTest() {
         try {
-            ICustomerRepository customerRepo = new CustomerRepository();
+            CustomerRepository customerRepo = new CustomerRepository();
             final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss").withZone(ZoneId.of("UTC"));
             ZonedDateTime createdDate = ZonedDateTime.parse("2023-02-05 23:48:30", formatter);
             ZonedDateTime lastUpdatedDate = ZonedDateTime.parse("2023-02-05 23:48:30", formatter);
@@ -107,7 +107,7 @@ public class RepoTests {
             Customer mockData = new Customer("Daddy Warbucks", "1919 Boardwalk", "01291",
                     "869-908-1875", createdDate, "script", lastUpdatedDate, "server",
                     29, 1);
-            return customerRepo.updateCustomer(mockData);
+            return customerRepo.update(mockData);
         } catch (Exception ex) {
             printTestError(ex.getMessage());
             return false;
@@ -121,8 +121,8 @@ public class RepoTests {
      */
     public static boolean getAllCustomerTest() {
         try {
-            ICustomerRepository customerRepo = new CustomerRepository();
-            List<Customer> customers = customerRepo.getAllCustomers();
+            CustomerRepository customerRepo = new CustomerRepository();
+            List<Customer> customers = customerRepo.getAll();
             if (customers.size() > 0)
                 return true;
             else
@@ -140,8 +140,8 @@ public class RepoTests {
      */
     public static boolean getCustomerTest() {
         try {
-            ICustomerRepository customerRepo = new CustomerRepository();
-            Customer customer = customerRepo.getCustomer(1);
+            CustomerRepository customerRepo = new CustomerRepository();
+            Customer customer = customerRepo.get(1);
             if (customer.getCustomerName().equals("Daddy Warbucks"))
                 return true;
             else
@@ -154,8 +154,8 @@ public class RepoTests {
 
     public static boolean getDivisionByNameTest() {
         try {
-            IFirstLevelDomainRepository firstLevelDomainRepo = new FirstLevelDomainRepository();
-            int domainId = firstLevelDomainRepo.getDivisionByName("Alabama");
+            FirstLevelDomainRepository firstLevelDomainRepo = new FirstLevelDomainRepository();
+            int domainId = firstLevelDomainRepo.getByName("Alabama");
             if (domainId != 1)
                 throw new Exception("Wrong domain Id was returned.");
             else

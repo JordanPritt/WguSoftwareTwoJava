@@ -278,6 +278,7 @@ public class MainScreen implements Initializable {
      */
     public void handleAddAppointment() {
         try {
+            // load up save screen
             Stage stage = new Stage();
             FXMLLoader loader = new FXMLLoader();
             loader.setResources(resourceBundle);
@@ -290,6 +291,8 @@ public class MainScreen implements Initializable {
             stage.setResizable(false);
             stage.setOnHiding(event -> refreshCustomerTableData());
             stage.show();
+            // refresh data in table
+            refreshAppointmentTableData();
         } catch (IOException ex) {
             System.out.println(resourceBundle.getString("appointmentAddError") + " reason: " + ex.getMessage());
         }
