@@ -5,14 +5,14 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 
 /**
- * A DAO context for communicating with the database.
+ * A context for communicating with the database.
  */
 public class ClientScheduleContext {
     private static final String protocol = "jdbc";
     private static final String vendor = ":mysql:";
     private static final String location = "//localhost/";
     private static final String databaseName = "client_schedule";
-    private static final String url = protocol + vendor + location + databaseName ;//+ "?connectionTimeZone=UTC+0";
+    private static final String url = protocol + vendor + location + databaseName + "?connectionTimeZone=SERVER";
     private static final String driver = "com.mysql.cj.jdbc.Driver";
     private static final String userName = "sqlUser";
     private static final String password = "Passw0rd!";

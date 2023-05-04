@@ -49,6 +49,16 @@ public class TestRunner {
 
             printTestResult(RepoTests.getDivisionByNameTest(), "getDivisionByNameTest");
             testCounter++;
+
+            printTestResult(RepoTests.getAllContactsTest(), "getAllContactsTest");
+            testCounter++;
+
+            printTestResult(RepoTests.insertAppointmentTest(), "insertAppointmentTest");
+            testCounter++;
+
+            printTestResult(RepoTests.deleteAppointmentTest(), "deleteAppointmentTest");
+            testCounter++;
+
         } catch (Exception ex) {
             String message = ANSI_RED + "\n[Error]\n" + ANSI_RESET + "Testing Failed, reason: ";
             System.out.println(message + ANSI_YELLOW + ex.getMessage() + ANSI_RESET);

@@ -4,6 +4,10 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
 import java.util.Date;
 
 /**
@@ -47,8 +51,8 @@ public class LoginLogger {
      * @return a timestamp string.
      */
     public static String getTimeStamp() {
-        Date date = new Date();
+        ZonedDateTime date = ZonedDateTime.of(LocalDateTime.now(), ZoneId.systemDefault());
         SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy h:mm:ss a");
-        return sdf.format(date);
+        return date.withZoneSameInstant(ZoneId.of("UTC")).toString();
     }
 }

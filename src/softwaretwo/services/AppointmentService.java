@@ -48,8 +48,8 @@ public class AppointmentService implements ICrudService<Appointment> {
     @Override
     public boolean create(Appointment appointment) throws Exception {
         try {
-            appointmentRepo.insert(appointment);
-            return true;
+            boolean result = appointmentRepo.insert(appointment);
+            return result;
         } catch (Exception ex) {
             throw new Exception("Could not create appointment: " + ex.getMessage());
         }

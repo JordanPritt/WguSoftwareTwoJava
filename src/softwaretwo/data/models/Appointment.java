@@ -39,6 +39,9 @@ public class Appointment {
      * @param createdBy     an appointment's created by
      * @param lastUpdate    an appointment's last update date.
      * @param lastUpdatedBy an appointment's last updated by.
+     * @param customerId    an appointment's customer identifier.
+     * @param userId        an appointment's user identifier.
+     * @param contactId     an appointment's contact identifier.
      */
     public Appointment(int id,
                        String title,
@@ -50,7 +53,10 @@ public class Appointment {
                        ZonedDateTime createDate,
                        String createdBy,
                        ZonedDateTime lastUpdate,
-                       String lastUpdatedBy) {
+                       String lastUpdatedBy,
+                       int customerId,
+                       int userId,
+                       int contactId) {
         this.id = id;
         this.title = title;
         this.description = description;
@@ -62,6 +68,9 @@ public class Appointment {
         this.createdBy = createdBy;
         this.lastUpdate = lastUpdate;
         this.lastUpdatedBy = lastUpdatedBy;
+        this.customerId = customerId;
+        this.userId = userId;
+        this.contactId = contactId;
     }
 
     /**

@@ -1,14 +1,12 @@
 package softwaretwo.tests;
 
 import softwaretwo.data.models.Appointment;
+import softwaretwo.data.models.Contact;
 import softwaretwo.data.models.Customer;
 import softwaretwo.data.models.User;
 import softwaretwo.data.repositories.*;
 
-import java.time.Instant;
-import java.time.ZoneId;
-import java.time.ZoneOffset;
-import java.time.ZonedDateTime;
+import java.time.*;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 
@@ -160,6 +158,81 @@ public class RepoTests {
                 throw new Exception("Wrong domain Id was returned.");
             else
                 return true;
+        } catch (Exception ex) {
+            printTestError(ex.getMessage());
+            return false;
+        }
+    }
+
+    /**
+     * Tests getting all contacts.
+     *
+     * @return a boolean representing pass or fail.
+     */
+    public static boolean getAllContactsTest() {
+        try {
+            ContactRepository contactsRepo = new ContactRepository();
+            List<Contact> contacts = contactsRepo.getAll();
+            if (contacts.size() == 0)
+                throw new Exception("No contacts where found.");
+            else
+                return true;
+        } catch (Exception ex) {
+            printTestError(ex.getMessage());
+            return false;
+        }
+    }
+
+    /**
+     * Tests inserting an appointment.
+     *
+     * @return
+     */
+    public static boolean insertAppointmentTest() {
+        try {
+            ZonedDateTime now = ZonedDateTime.now();
+            Appointment appointment = new Appointment();
+            appointment.setTitle("System Test Appointment");
+            appointment.setDescription("Description for a test appointment.");
+            appointment.setLocation("Test Location");
+            appointment.setType("Test Type");
+            appointment.setStart(
+                    ZonedDateTime.of(LocalDateTime.of(2023, 4, 3, 12, 00, 00),
+                            ZoneId.of("UTC")));
+            appointment.setEnd(
+                    ZonedDateTime.of(LocalDateTime.of(2023, 05, 25, 14, 0, 0),
+                            ZoneId.of("UTC")));
+            appointment.setCreateDate(now);
+            appointment.setCreatedBy("System");
+            appointment.setLastUpdate(now);
+            appointment.setLastUpdatedBy("System");
+            appointment.setCustomerId(1);
+            appointment.setUserId(1);
+            appointment.setContactId(3);
+
+            AppointmentRepository appointmentRepository = new AppointmentRepository();
+            boolean wasInserted = appointmentRepository.insert(appointment);
+
+            if (!wasInserted)
+                throw new Exception("Could not insert appointment.");
+            return true;
+        } catch (Exception ex) {
+            printTestError(ex.getMessage());
+            return false;
+        }
+    }
+
+    /**
+     * Tests deleting an appointment (must be run after the insertion test).
+     *
+     * @return
+     */
+    public static boolean deleteAppointmentTest() {
+        try {
+            AppointmentRepository appointmentRepository = new AppointmentRepository();
+            int appointmentId = appointmentRepository.getAppointmentByTitle("System Test Appointment").getId();
+            appointmentRepository.delete(appointmentId);
+            return true;
         } catch (Exception ex) {
             printTestError(ex.getMessage());
             return false;
